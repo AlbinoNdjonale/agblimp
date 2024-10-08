@@ -106,10 +106,10 @@ class Question(models.Model):
     pois este é modelo das perguntas
     feitas pelos os usuários
     '''
-    client      = models.ForeignKey(Client, on_delete = models.CASCADE, null = True)
+    client      = models.ForeignKey(Client, on_delete = models.CASCADE, null = True, blank = True)
     name_client = models.CharField(max_length = 50)
     question    = models.TextField()
-    date        = models.DateField(auto_now_add=False)
+    date        = models.DateField(auto_now_add = True)
 
     def __str__(self) -> str:
         if len(self.question) <= 50:
