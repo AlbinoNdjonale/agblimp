@@ -1,4 +1,5 @@
 from django.db import models
+import uuid
 
 class Service(models.Model):
     '''
@@ -22,7 +23,7 @@ class Client(models.Model):
     o registro de clientes mas durante o agendamento
     o cliente devera fornecer seus dados
     '''
-    id          = models.UUIDField(unique = True, primary_key = True)
+    id          = models.UUIDField(primary_key = True, editable = False, default = uuid.uuid4)
     name        = models.CharField(max_length = 50)
     email       = models.EmailField(max_length = 254)
     number      = models.CharField(max_length = 11)
