@@ -69,7 +69,7 @@ class Testimony(models.Model):
     nulo onde o name_client só será necessário
     se o client for nulo
     '''
-    client      = models.ForeignKey(Client, on_delete = models.CASCADE, null = True)
+    client      = models.ForeignKey(Client, on_delete = models.CASCADE, null = True, blank = True)
     name_client = models.CharField(max_length = 50)
     mesage      = models.TextField()
     date        = models.DateField(auto_now_add = True)
