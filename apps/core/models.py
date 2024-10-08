@@ -36,3 +36,27 @@ class Client(models.Model):
     class Meta:
         verbose_name        = 'Client'
         verbose_name_plural = 'Clients'
+
+class Scheduling(models.Model):
+    '''
+      Modelo agendamento
+    '''
+    service = models.ForeignKey(Service, on_delete = models.CASCADE)
+    client  = models.ForeignKey(Client, on_delete = models.CASCADE)
+    date    = models.DateTimeField()
+    status  = models.CharField(max_length = 12, choices = [
+        ('confirmado', 'Confirmado'),
+        ('cancelado', 'Cancelado')
+    ])
+    way_payment = models.CharField(max_length = 50, choices = [
+        ('cartão credito', 'Cartão credito'),
+        ('Cartão debito', 'Cartão debito'),
+        ('A vista', 'A vista')
+    ])
+
+    def __str__(self) -> str:
+        return f'Agedamento de {self.client.name} em {self.date}'
+    
+    class Meta:
+        verbose_name        = 'Scheduling'
+        verbose_name_plural = 'Schedulings'
