@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "agblimp"
+version = "1.0.0"
+description = "Site Institucional para uma empresa que presta serviços de limpesa"
+authors = ["Albino Ndjonale <albinondjonale1@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.1.1"
+djangorestframework = "^3.15.2"
+djangorestframework-simplejwt = "^5.3.1"
+gunicorn = "^23.0.0"
+django-cors-headers = "^4.4.0"
+psycopg2 = "^2.9.9"
+python-dotenv = "^1.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
