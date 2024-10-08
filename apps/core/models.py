@@ -79,3 +79,22 @@ class Testimony(models.Model):
     class Meta:
         verbose_name        = 'Testimony'
         verbose_name_plural = 'Testimonies'
+
+class Faq(models.Model):
+    '''
+      Modelo Faq ou perguntas frequentes
+    usado para registrar as perguntas frequentes
+    e os suas respectivas respostas
+    '''
+    question = models.TextField()
+    response = models.TextField()
+
+    def __str__(self) -> str:
+        if len(self.question) <= 50:
+            return self.question
+        
+        return self.question[:50]+'...'
+    
+    class Meta:
+        verbose_name        = 'Faq'
+        verbose_name_plural = 'Faqs'
