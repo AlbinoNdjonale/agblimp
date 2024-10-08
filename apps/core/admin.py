@@ -1,3 +1,9 @@
 from django.contrib import admin
+from . import models
 
-# Register your models here.
+admin.site.register(models.Service)
+admin.site.register(models.Client)
+admin.site.register(models.Scheduling)
+admin.site.register(models.Testimony)
+admin.site.register(models.Faq)
+admin.site.register(models.Question)
