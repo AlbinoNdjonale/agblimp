@@ -60,3 +60,22 @@ class Scheduling(models.Model):
     class Meta:
         verbose_name        = 'Scheduling'
         verbose_name_plural = 'Schedulings'
+
+class Testimony(models.Model):
+    '''
+      Modelo depoimento, ele tem os atributos
+    name_client e client, onde o client pode ser
+    nulo onde o name_client só será necessário
+    se o client for nulo
+    '''
+    client      = models.ForeignKey(Client, on_delete = models.CASCADE, null = True)
+    name_client = models.CharField(max_length = 50)
+    mesage      = models.TextField()
+    date        = models.DateField(auto_now_add = True)
+
+    def __str__(self) -> str:
+        return f'Depoimento de {self.name_client} em {self.date}'
+    
+    class Meta:
+        verbose_name        = 'Testimony'
+        verbose_name_plural = 'Testimonies'
