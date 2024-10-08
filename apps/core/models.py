@@ -98,3 +98,24 @@ class Faq(models.Model):
     class Meta:
         verbose_name        = 'Faq'
         verbose_name_plural = 'Faqs'
+
+class Question(models.Model):
+    '''
+      Lembra do modelo Faq,
+    pois este é modelo das perguntas
+    feitas pelos os usuários
+    '''
+    client      = models.ForeignKey(Client, on_delete = models.CASCADE, null = True)
+    name_client = models.CharField(max_length = 50)
+    question    = models.TextField()
+    date        = models.DateField(auto_now_add=False)
+
+    def __str__(self) -> str:
+        if len(self.question) <= 50:
+            return self.question
+        
+        return self.question[:50]+'...'
+    
+    class Meta:
+        verbose_name        = 'Question'
+        verbose_name_plural = 'Questions'
