@@ -1,0 +1,40 @@
+body > header {
+    background: var(--color-main);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+body > header > div > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 0;
+}
+
+body > header nav li {
+    list-style: none;
+    display: inline-block;
+}
+
+body > header nav li a {
+    padding: 7px;
+    text-decoration: none;
+    color: var(--color-bg);
+    transition: .6s;
+    border-radius: 3px;
+    font-size: 1.3em;
+}
+
+body > header nav li a:hover {
+    color: var(--color-main);
+    background: var(--color-bg);
+}
+
+@media screen and  (max-width: 959px) {
+    body > header nav {
+        display: none;
+    }
+}

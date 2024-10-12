@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang = "pt-br">
+{% load static %}
+<head>
+    <meta charset = "UTF-8">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+    <meta name = "description" content = "web site for a provider servie to cleaning">
+    <link rel = "stylesheet" href = "{% static 'css/style.css' %}">
+    <title>Agblimp</title>
+</head>
+<body>
+    <header>
+        <div class = "container">
+            <div>
+                <h1>Agblimp</h1>
+
+                <nav>
+                    <ul>
+                        <li><a href = "#home">Inicio</a></li>
+                        <li><a href = "#home">Serviços</a></li>
+                        <li><a href = "#home">Depoimentos</a></li>
+                        <li><a href = "#home">Deixe sua Dúvida</a></li>
+                        <li><a href = "#home">Dúvidas Frequentes</a></li>
+                        <li><a href = "#home">Contacto</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id = "home" class = "banner">
+            <div class = "container">
+                <form action = {% url "web:scheduling" %} method = "post">
+                    {% csrf_token %}
+
+                    <section>
+                        <h2>Agendar serviço</h2>
+                    </section>
+    
+                    <section>
+                        <label for = "name">Nome</label>
+                        <input type = "text" name = "name" id = "name">
+                    </section>
+    
+                    <section>
+                        <label for = "email">Email</label>
+                        <input type = "email" name = "email" id = "email">
+                    </section>
+    
+                    <section>
+                        <label for = "address">Endereço</label>
+                        <input type = "text" name = "address" id = "address">
+                    </section>
+    
+                    <section class = "flex">
+                        <section>
+                            <label for = "number">Número</label>
+                            <input type = "text" name = "number" id = "number">
+                        </section>
+    
+                        <section>
+                            <label for = "cep">Cep</label>
+                            <input type = "text" name = "cep" id = "cep">
+                        </section>
+                    </section>
+    
+                    <section>
+                        <label for = "complemento">Complemento</label>
+                        <input type = "text" name = "complemento" id = "complemento">
+                    </section>
+    
+                    <section>
+                        <label for = "way_payment">Forma de pagamento</label>
+                        <select name = "way_payment" id = "way_payment">
+                            <option></option>
+                            <option value = "cartão debito">Cartão debito</option>
+                            <option value = "cartão credito">Cartão credito</option>
+                            <option value = "a vista">A vista</option>
+                        </select>
+                    </section>
+    
+                    <section>
+                        <label for = "service">Serviço</label>
+                        <select name = "service" id = "service">
+                            <option></option>
+                            {% for service in services %}
+                                <option value = "{{ service.id }}"> {{ service.name }} </option>
+                            {% endfor %}
+                        </select>
+                    </section>
+    
+                    <section>
+                        <label for = "date">Data de agendamento</label>
+                        <input type = "datetime-local" name = "date" id = "date">
+                    </section>
+    
+                    <section>
+                        <button class = "cta" type = "submit">CONFIRMAR</button>
+                    </section>
+                </form>
+    
+                <section id = "intro">
+                    <p>
+                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corrupti corporis neque doloremque sint pariatur sunt deserunt expedita, est ab nam, perferendis, consectetur minus iste. Ipsam atque esse reiciendis eum fugiat!
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non cumque error quis consequuntur fugiat corrupti placeat, quo excepturi atque nisi id voluptates animi asperiores reprehenderit quidem velit alias, eos commodi.
+                    </p>
+    
+                    <div>
+                        <button class = "second">ORÇAMENTO ONLINE</button>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        {% if msg %}
+            <div class = "msg">
+                <div class = "{{ status }}">
+                    <div>
+                        <button onclick = "close_msg()"></button>
+                    </div>
+                    <p>
+                        {{ msg }}
+                    </p>
+                </div>
+            </div>
+        {% endif %}
+    </main>
+    <script src = "{% static 'js/app.js' %}"></script>
+</body>
+</html>

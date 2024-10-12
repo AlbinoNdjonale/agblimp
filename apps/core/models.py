@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 import uuid
 
@@ -27,7 +28,7 @@ class Client(models.Model):
     name        = models.CharField(max_length = 50)
     email       = models.EmailField(max_length = 254)
     number      = models.CharField(max_length = 11)
-    addess      = models.CharField(max_length = 100)
+    address      = models.CharField(max_length = 100)
     cep         = models.CharField(max_length = 11)
     complemento = models.CharField(max_length = 20, null = True, blank = True)
 
@@ -48,12 +49,13 @@ class Scheduling(models.Model):
     status  = models.CharField(max_length = 12, choices = [
         ('confirmado', 'Confirmado'),
         ('cancelado', 'Cancelado')
-    ])
+    ], null = True)
     way_payment = models.CharField(max_length = 50, choices = [
         ('cartão credito', 'Cartão credito'),
-        ('Cartão debito', 'Cartão debito'),
-        ('A vista', 'A vista')
+        ('cartão debito', 'Cartão debito'),
+        ('a vista', 'A vista')
     ])
+    collaborator = models.ForeignKey(User, on_delete = models.DO_NOTHING, null = True)
 
     def __str__(self) -> str:
         return f'Agedamento de {self.client.name} em {self.date}'

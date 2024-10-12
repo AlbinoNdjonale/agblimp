@@ -1,0 +1,94 @@
+body > main .banner {
+    width: 100%;
+    min-height: 100vh;   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-main);
+}
+
+body > main .banner > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+body > main .banner form {
+    max-width: 400px;
+    width: 100%;
+}
+
+body > main .banner form section {
+    display: grid;
+}
+
+body > main .banner form h2 {
+    color: var(--color-bg);
+}
+
+body > main .banner form > section.flex {
+    display: flex;
+    gap: 10px;
+}
+
+body > main .banner form > section.flex input, body > main .banner form > section.flex section {
+    width: 100%;
+}
+
+body > main .banner form > section:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+body > main .banner form section label {
+    font-weight: bold;
+}
+
+body > main .banner form input, body > main .banner form select {
+    padding: 7.8px;
+    border: none;
+    background: var(--color-bg);
+    outline: none;
+    border-radius: 2px;
+    border-bottom: 3px solid;
+}
+
+body > main .banner form input:focus, body > main .banner form select:focus {
+    border-bottom-color: var(--color-cta);
+}
+
+body > main .banner button {
+    padding: 8px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#intro {
+    max-width: 500px;
+}
+
+#intro p {
+    font-size: 24px;
+    color: var(--color-bg);
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--color-second);
+
+}
+
+@media screen and  (max-width: 830px) {
+    #intro {
+        display: none;
+    }
+
+    body > main .banner > div {
+        justify-content: center;
+    }
+
+    body > main .banner form {
+        max-width: none;
+    }
+}
