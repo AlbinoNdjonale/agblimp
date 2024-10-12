@@ -25,7 +25,7 @@ body > header nav li a {
     color: var(--color-bg);
     transition: .6s;
     border-radius: 3px;
-    font-size: 1.3em;
+    font-size: 1.1em;
 }
 
 body > header nav li a:hover {
@@ -33,7 +33,7 @@ body > header nav li a:hover {
     background: var(--color-bg);
 }
 
-@media screen and  (max-width: 959px) {
+@media screen and  (max-width: 852px) {
     body > header nav {
         display: none;
     }

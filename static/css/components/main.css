@@ -16,6 +16,7 @@ body > main .banner > div {
 
 body > main .banner form {
     max-width: 400px;
+    min-width: 300px;
     width: 100%;
 }
 
@@ -70,16 +71,18 @@ body > main .banner button {
 }
 
 #intro p {
-    font-size: 24px;
+    font-size: 1.5em;
     color: var(--color-bg);
-    font-weight: bold;
     margin-bottom: 10px;
     padding-bottom: 10px;
     border-bottom: 2px solid var(--color-second);
-
 }
 
-@media screen and  (max-width: 830px) {
+#intro img {
+    width: 100%;
+}
+
+@media screen and  (max-width: 700px) {
     #intro {
         display: none;
     }
@@ -90,5 +93,6 @@ body > main .banner button {
 
     body > main .banner form {
         max-width: none;
+        min-width: none;
     }
 }

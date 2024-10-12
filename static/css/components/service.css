@@ -1,0 +1,43 @@
+#services {
+    padding: 30px 0;
+}
+
+#services > div > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 20px 0;
+    justify-content: space-around;
+}
+
+#services > div > div > div {
+    flex: 1 200px;
+    background: var(--color-main);
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--color-bg);
+    box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, .6);
+}
+
+#services > div > div > div p {
+    margin: 20px 0;
+    padding: 0 10px;
+    border-left: 2px solid var(--color-bg);
+}
+
+#services > div > div > div button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background: var(--color-second);
+    transition: .3s;
+}
+
+#services > div > div > div button:hover {
+    transform: scale(1.1);
+}

@@ -16,8 +16,8 @@
 
                 <nav>
                     <ul>
-                        <li><a href = "#home">Inicio</a></li>
-                        <li><a href = "#home">Serviços</a></li>
+                        <li><a id = "link-home" href = "#home">Inicio</a></li>
+                        <li><a href = "#services">Serviços</a></li>
                         <li><a href = "#home">Depoimentos</a></li>
                         <li><a href = "#home">Deixe sua Dúvida</a></li>
                         <li><a href = "#home">Dúvidas Frequentes</a></li>
@@ -40,28 +40,28 @@
     
                     <section>
                         <label for = "name">Nome</label>
-                        <input type = "text" name = "name" id = "name">
+                        <input required type = "text" name = "name" id = "name">
                     </section>
     
                     <section>
                         <label for = "email">Email</label>
-                        <input type = "email" name = "email" id = "email">
+                        <input required type = "email" name = "email" id = "email">
                     </section>
     
                     <section>
                         <label for = "address">Endereço</label>
-                        <input type = "text" name = "address" id = "address">
+                        <input required type = "text" name = "address" id = "address">
                     </section>
     
                     <section class = "flex">
                         <section>
                             <label for = "number">Número</label>
-                            <input type = "text" name = "number" id = "number">
+                            <input required type = "text" name = "number" id = "number">
                         </section>
     
                         <section>
                             <label for = "cep">Cep</label>
-                            <input type = "text" name = "cep" id = "cep">
+                            <input required type = "text" name = "cep" id = "cep">
                         </section>
                     </section>
     
@@ -72,7 +72,7 @@
     
                     <section>
                         <label for = "way_payment">Forma de pagamento</label>
-                        <select name = "way_payment" id = "way_payment">
+                        <select required name = "way_payment" id = "way_payment">
                             <option></option>
                             <option value = "cartão debito">Cartão debito</option>
                             <option value = "cartão credito">Cartão credito</option>
@@ -82,7 +82,7 @@
     
                     <section>
                         <label for = "service">Serviço</label>
-                        <select name = "service" id = "service">
+                        <select required name = "service" id = "service">
                             <option></option>
                             {% for service in services %}
                                 <option value = "{{ service.id }}"> {{ service.name }} </option>
@@ -92,7 +92,7 @@
     
                     <section>
                         <label for = "date">Data de agendamento</label>
-                        <input type = "datetime-local" name = "date" id = "date">
+                        <input required type = "datetime-local" name = "date" id = "date">
                     </section>
     
                     <section>
@@ -113,11 +113,49 @@
             </div>
         </section>
 
+        <section id = "services">
+            <div class = "container">
+                <h2 class = "title">Nossos Serviços</h2>
+
+                <div>
+                    {% for service in services %}
+                        <div
+                          data-id   = '{{ service.id }}'
+                          data-name = '{{ service.name }}'
+                          data-description = '{{ service.description }}'
+                          class = "service">
+                            <h3>{{ service.name }}</h3>
+
+                            <p></p>
+
+                            <div>
+                                <button onclick = "display_learn_more_servie('{{ service.id }}')">Saber mais</button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <div class = "learn-more-service">
+            <div>
+                <div>
+                    <button onclick = "close_context('.learn-more-service')"></button>
+                </div>
+
+                <h2></h2>
+
+                <p></p>
+
+                <button id = "c">Agendar Serviço</button>
+            </div>
+        </div>
+
         {% if msg %}
             <div class = "msg">
                 <div class = "{{ status }}">
                     <div>
-                        <button onclick = "close_msg()"></button>
+                        <button onclick = "close_context('.msg')"></button>
                     </div>
                     <p>
                         {{ msg }}
