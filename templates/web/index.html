@@ -14,19 +14,15 @@
             <div>
                 <h1>Agblimp</h1>
 
-                <nav>
-                    <ul>
-                        <li><a id = "link-home" href = "#home">Inicio</a></li>
-                        <li><a href = "#services">Serviços</a></li>
-                        <li><a href = "#testimonies">Depoimentos</a></li>
-                        <li><a href = "#home">Deixe sua Dúvida</a></li>
-                        <li><a href = "#home">Dúvidas Frequentes</a></li>
-                        <li><a href = "#home">Contacto</a></li>
-                    </ul>
-                </nav>
+                {% include "web/components/menu.html" %}
+
+                <button onclick = "expand()" class = "btn-toggle"></button>
             </div>
         </div>
     </header>
+    <div id = "menu-mobile" class = "in expand">
+        {% include "web/components/menu.html" %}
+    </div>
 
     <main>
         {# section banner #}

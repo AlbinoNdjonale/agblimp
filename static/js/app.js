@@ -49,3 +49,14 @@ if (testimonies.length > 0) {
     alter()
     if (testimonies.length > 1) setInterval(alter, 3000)
 }
+
+const expand = () => {
+    const menu = document.getElementById('menu-mobile')
+
+    const state = menu.style.width
+
+    menu.style.width = state==='80vw'?'0':'80vw'
+}
+
+document.querySelectorAll('#menu-mobile a')
+    .forEach(item => item.addEventListener('click', expand))
