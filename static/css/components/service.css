@@ -14,13 +14,20 @@
     flex: 1 200px;
     background: var(--color-main);
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 10px; /* Aumenta o arredondamento das bordas */
     max-width: 400px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     color: var(--color-bg);
-    box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, .6);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra mais suave e difusa */
+    transition: transform 0.3s, box-shadow 0.3s; /* Transição suave */
+    overflow: hidden; /* Esconde conteúdo que transborda */
+}
+
+#services > div > div > div:hover {
+    transform: translateY(-5px); /* Eleva o card ao passar o mouse */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Aumenta a sombra no hover */
 }
 
 #services > div > div > div p {

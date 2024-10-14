@@ -45,27 +45,6 @@ body > main .banner form section label {
     font-weight: bold;
 }
 
-body > main .banner form input, body > main .banner form select {
-    padding: 7.8px;
-    border: none;
-    background: var(--color-bg);
-    outline: none;
-    border-radius: 2px;
-    border-bottom: 3px solid;
-}
-
-body > main .banner form input:focus, body > main .banner form select:focus {
-    border-bottom-color: var(--color-cta);
-}
-
-body > main .banner button {
-    padding: 8px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-weight: bold;
-}
-
 #intro {
     max-width: 500px;
 }

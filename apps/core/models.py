@@ -48,8 +48,9 @@ class Scheduling(models.Model):
     date    = models.DateTimeField()
     status  = models.CharField(max_length = 12, choices = [
         ('confirmado', 'Confirmado'),
-        ('cancelado', 'Cancelado')
-    ], null = True)
+        ('cancelado', 'Cancelado'),
+        ('pendente', 'Pendente')
+    ], default = 'pendente')
     way_payment = models.CharField(max_length = 50, choices = [
         ('cartão credito', 'Cartão credito'),
         ('cartão debito', 'Cartão debito'),
@@ -75,6 +76,11 @@ class Testimony(models.Model):
     name_client = models.CharField(max_length = 50)
     mesage      = models.TextField()
     date        = models.DateField(auto_now_add = True)
+    status      = models.CharField(max_length = 12, choices = [
+        ('aprovado', 'Aprovado'),
+        ('reprovado', 'Reprovado'),
+        ('pendente', 'Pendente')
+    ], default = 'pendente')
 
     def __str__(self) -> str:
         return f'Depoimento de {self.name_client} em {self.date}'

@@ -18,7 +18,7 @@
                     <ul>
                         <li><a id = "link-home" href = "#home">Inicio</a></li>
                         <li><a href = "#services">Serviços</a></li>
-                        <li><a href = "#home">Depoimentos</a></li>
+                        <li><a href = "#testimonies">Depoimentos</a></li>
                         <li><a href = "#home">Deixe sua Dúvida</a></li>
                         <li><a href = "#home">Dúvidas Frequentes</a></li>
                         <li><a href = "#home">Contacto</a></li>
@@ -29,6 +29,7 @@
     </header>
 
     <main>
+        {# section banner #}
         <section id = "home" class = "banner">
             <div class = "container">
                 <form action = {% url "web:scheduling" %} method = "post">
@@ -40,39 +41,39 @@
     
                     <section>
                         <label for = "name">Nome</label>
-                        <input required type = "text" name = "name" id = "name">
+                        <input class = "input" required type = "text" name = "name" id = "name">
                     </section>
     
                     <section>
                         <label for = "email">Email</label>
-                        <input required type = "email" name = "email" id = "email">
+                        <input class = "input" required type = "email" name = "email" id = "email">
                     </section>
     
                     <section>
                         <label for = "address">Endereço</label>
-                        <input required type = "text" name = "address" id = "address">
+                        <input class = "input" required type = "text" name = "address" id = "address">
                     </section>
     
                     <section class = "flex">
                         <section>
                             <label for = "number">Número</label>
-                            <input required type = "text" name = "number" id = "number">
+                            <input class = "input" required type = "text" name = "number" id = "number">
                         </section>
     
                         <section>
                             <label for = "cep">Cep</label>
-                            <input required type = "text" name = "cep" id = "cep">
+                            <input class = "input" required type = "text" name = "cep" id = "cep">
                         </section>
                     </section>
     
                     <section>
                         <label for = "complemento">Complemento</label>
-                        <input type = "text" name = "complemento" id = "complemento">
+                        <input class = "input" type = "text" name = "complemento" id = "complemento">
                     </section>
     
                     <section>
                         <label for = "way_payment">Forma de pagamento</label>
-                        <select required name = "way_payment" id = "way_payment">
+                        <select class = "input" required name = "way_payment" id = "way_payment">
                             <option></option>
                             <option value = "cartão debito">Cartão debito</option>
                             <option value = "cartão credito">Cartão credito</option>
@@ -82,7 +83,7 @@
     
                     <section>
                         <label for = "service">Serviço</label>
-                        <select required name = "service" id = "service">
+                        <select class = "input" required name = "service" id = "service">
                             <option></option>
                             {% for service in services %}
                                 <option value = "{{ service.id }}"> {{ service.name }} </option>
@@ -92,27 +93,33 @@
     
                     <section>
                         <label for = "date">Data de agendamento</label>
-                        <input required type = "datetime-local" name = "date" id = "date">
+                        <input class = "input" required type = "datetime-local" name = "date" id = "date">
                     </section>
     
                     <section>
-                        <button class = "cta" type = "submit">CONFIRMAR</button>
+                        <button class = "btn cta" type = "submit">CONFIRMAR</button>
                     </section>
                 </form>
     
                 <section id = "intro">
                     <p>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corrupti corporis neque doloremque sint pariatur sunt deserunt expedita, est ab nam, perferendis, consectetur minus iste. Ipsam atque esse reiciendis eum fugiat!
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non cumque error quis consequuntur fugiat corrupti placeat, quo excepturi atque nisi id voluptates animi asperiores reprehenderit quidem velit alias, eos commodi.
+                        <strong>
+                            Estamos aqui para tornar seu ambiente
+                            mais limpo, saudável e acolhedor.
+                        </strong><br>
+                        Nossos serviços de limpeza são personalizados
+                        para atender às suas necessidades, seja em sua casa,
+                        escritório ou comércio
                     </p>
     
                     <div>
-                        <button class = "second">ORÇAMENTO ONLINE</button>
+                        <button class = "btn second">ORÇAMENTO ONLINE</button>
                     </div>
                 </section>
             </div>
         </section>
 
+        {# section services #}
         <section id = "services">
             <div class = "container">
                 <h2 class = "title">Nossos Serviços</h2>
@@ -133,6 +140,54 @@
                             </div>
                         </div>
                     {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        {# section testimony #}
+        <section id = "testimonies">
+            <div class = "container">
+                <h2 class = "title">O que os nossos clientes dizem sobre nós</h2>
+
+                <div>
+                    <section>
+                        <div id = "wrapper-testimony">
+                            {% for testimony in testimonies %}
+                                <div class = "testimony">
+                                    <header>
+                                        <h3>{{ testimony.name_client }}</h3>
+                                        <small>
+                                            <em>{{ testimony.date }}</em>
+                                        </small>
+                                    </header>
+                                    <p>
+                                        <span>''</span>{{ testimony.mesage }}
+                                    </p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+
+                    <section>
+                        <form action = "{% url 'web:testimony' %}" method = "post">
+                            {% csrf_token %}
+                            <h3>Deixe seu depoimento</h3>
+
+                            <section>
+                                <label for = "name_client">Nome</label>
+                                <input class = "input" required type = "text" name = "name_client" id = "name_client">
+                            </section>
+
+                            <section>
+                                <label for = "mesage">Mensagem</label>
+                                <textarea class = "input" required rows = "7" name = "mesage" id = "mesage"></textarea>
+                            </section>
+
+                            <section>
+                                <button class = "btn cta">enviar</button>
+                            </section>
+                        </form>
+                    </section>
                 </div>
             </div>
         </section>

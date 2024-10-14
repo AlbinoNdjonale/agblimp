@@ -17,3 +17,12 @@ class CreateClient(ModelForm):
         model = models.Client
 
         fields = '__all__'
+
+class CreateTestimony(ModelForm):
+    class Meta:
+        model = models.Testimony
+
+        fields = [
+            'name_client',
+            'mesage'
+        ]

@@ -28,3 +28,24 @@ const to_scheduling_servie = (id) => {
     close_context('.learn-more-service')
     document.getElementById('link-home').click()
 }
+
+let idx = 0
+const testimonies = document.querySelectorAll('.testimony')
+
+const alter = () => {
+    testimonies[idx].style.display  = 'block'
+    if (testimonies.length > 1) {
+        testimonies[idx===0?testimonies.length-1:idx-1].style.display = 'none'
+
+        idx++
+    
+        if (idx === testimonies.length) {
+            idx = 0
+        }   
+    }
+}
+
+if (testimonies.length > 0) {
+    alter()
+    if (testimonies.length > 1) setInterval(alter, 3000)
+}

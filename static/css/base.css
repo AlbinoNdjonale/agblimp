@@ -123,3 +123,46 @@ h1 {
     text-align: center;
     padding: 20px 0;
 }
+
+.input {
+    padding: 7.8px;
+    border: none;
+    background: var(--color-bg);
+    outline: none;
+    border-radius: 2px;
+    border-bottom: 3px solid;
+    resize: none;
+}
+
+.input:focus {
+    border-bottom-color: var(--color-cta);
+}
+
+.btn {
+    padding: 8px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 2rem; /* 32px */
+}
+
+h3 {
+    font-size: 1.75rem; /* 28px */
+}
+
+p {
+    font-size: 1rem; /* 16px */
+    line-height: 1.5; /* 24px de altura da linha */
+}
+
+form button {
+    transition: .3s;
+}
+
+form button:hover {
+    background: #026d4d;
+}

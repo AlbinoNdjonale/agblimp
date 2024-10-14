@@ -3,16 +3,17 @@ from apps.core import models
 from django.http import HttpRequest, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from urllib.parse import urlencode
 
 # Create your views here.
 
 def index(request: HttpRequest):
-    services = models.Service.objects.all()
-
-    print(request.GET)
+    services    = models.Service.objects.all()
+    testimonies = models.Testimony.objects.filter(status = 'aprovado')
 
     return render(request, 'web/index.html', {
         'services': services,
+        'testimonies': testimonies,
         'msg': request.GET.get('msg'),
         'status': request.GET.get('status')
     })
@@ -53,4 +54,37 @@ def scheduling(request: HttpRequest):
             scheduling = models.Scheduling(client = client, **data_scheduling)
             scheduling.save()
 
-    return HttpResponseRedirect(reverse('web:index'))
+            query_params = {
+                'msg': 'Serviço agendado com sucesso, por favor aguarde pela nossa resposta',
+                'status': 'ok'
+            }
+        else:
+            query_params = {
+                'msg': 'Não foi possivel agendar o serviço, tente de novo',
+                'status': 'error'
+            }
+
+    return HttpResponseRedirect(f'{reverse("web:index")}?{urlencode(query_params)}')
+
+def testimony(request: HttpRequest):
+    form = forms.CreateTestimony(request.POST)
+
+    if form.is_valid():
+        testimony = models.Testimony(
+            status = 'pendente',
+            mesage = request.POST['mesage'],
+            name_client = request.POST['name_client']
+        )
+        testimony.save()
+
+        query_params = {
+            'msg': 'Agradecemos pelo seu depoimento',
+            'status': 'ok'
+        }
+    else:
+        query_params = {
+            'msg': 'Não foi possivel guardar o seu depoimento, tente de novo',
+            'status': 'erro'
+        }
+
+    return HttpResponseRedirect(f'{reverse("web:index")}?{urlencode(query_params)}')
