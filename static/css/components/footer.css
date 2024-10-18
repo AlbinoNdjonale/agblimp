@@ -71,3 +71,7 @@ footer > div > div:last-child {
 footer > div > div:last-child span {
     color: var(--color-bg);
 }
+
+footer > div > div:last-child span:last-child {
+    cursor: pointer;
+}

@@ -47,35 +47,35 @@
 
                     <section>
                         <label for = "cep">Cep</label>
-                        <input class = "input" required type = "text" name = "cep" id = "cep">
+                        <input class = "input" required type = "text" name = "cep" id = "cep" value = "{{ client.cep|default:'' }}">
                     </section>
 
                     <section>
                         <label for = "name">Nome</label>
-                        <input class = "input" required type = "text" name = "name" id = "name">
+                        <input class = "input" required type = "text" name = "name" id = "name" value = "{{ client.name|default:'' }}">
                     </section>
 
                     <section class = "flex">
                         <section>
                             <label for = "email">Email</label>
-                            <input class = "input" required type = "email" name = "email" id = "email">
+                            <input class = "input" required type = "email" name = "email" id = "email" value = "{{ client.email|default:'' }}">
                         </section>
 
                         <section>
                             <label for = "number">Número</label>
-                            <input class = "input" required type = "text" name = "number" id = "number">
+                            <input class = "input" required type = "text" name = "number" id = "number" value = "{{ client.number|default:'' }}">
                         </section>
                     </section>
 
                     <section class = "flex">
                         <section>
                             <label for = "address">Endereço</label>
-                            <input class = "input" required type = "text" name = "address" id = "address">
+                            <input class = "input" required type = "text" name = "address" id = "address" value = "{{ client.address|default:'' }}">
                         </section>
         
                         <section>
                             <label for = "complemento">Complemento</label>
-                            <input class = "input" type = "text" name = "complemento" id = "complemento">
+                            <input class = "input" type = "text" name = "complemento" id = "complemento" value = "{{ client.complemento|default:'' }}">
                         </section>
                     </section>
 
@@ -315,6 +315,21 @@
             </div>
         </section>
 
+        <section id = "banner-cookie">
+            <div class="container">
+                <div>
+                    <p>
+                        Este site utiliza cookies
+                        para melhorar sua experiência
+                        de navegação.
+                    </p>
+
+                    <button onclick = "acceptcookie()" class = "btn second">Aceitar</button>
+                    <button onclick = "document.getElementById('banner-cookie').style.display = 'none'" class = "btn">Negar</button>
+                </div>
+            </div>
+        </section>
+
         <a href = "">
             <div class = "whatsapp-button ">
                 <img src = "{% static 'img/whatsapp.svg' %}" alt = "imagem do whatsapp">
@@ -354,6 +369,123 @@
                 <ul></ul>
                 
                 <button class = "btn second">Candidata-se a esta vaga</button>
+            </div>
+        </div>
+
+        <div class = "politic-privacit">
+            <div class = "popup-content">
+                <button onclick = "close_context('.politic-privacit')" class = "close-btn">&times;</button>
+
+                <div>
+                    <h2>Política de Privacidade</h2>
+
+                    <p>
+                        A sua privacidade é importante para nós.
+                        Esta política descreve como coletamos,
+                        usamos e protegemos suas informações
+                        ao acessar nosso site
+                    </p>
+
+                    <section>
+                        <h3>Coleta de Informações</h3>
+    
+                        <p>
+                            Nós não coletamos informações
+                            pessoais que não sejam necessárias
+                            para o funcionamento do nosso serviço.
+                            Quando você se registra em nosso site,
+                            podemos coletar algumas informações
+                            básicas, como seu nome, endereço de
+                            e-mail e outras informações relevantes
+                            para a criação de uma conta
+                        </p>
+                    </section>
+    
+                    <section>
+                        <h3>Uso de Dados</h3>
+    
+                        <p>
+                            Os dados que coletamos são utilizados
+                            exclusivamente para melhorar a
+                            sua experiência em nosso site e
+                            para fornecer os serviços solicitados.
+                            Nós não compartilhamos, vendemos ou
+                            alugamos suas informações pessoais
+                            a terceiros
+                        </p>
+                    </section>
+    
+                    <section>
+                        <h3>Senhas e Segurança</h3>
+    
+                        <p>
+                            As senhas dos usuários são armazenadas
+                            de forma segura em nosso banco de dados
+                            usando hashing, o que significa que não
+                            guardamos suas senhas em texto claro.
+                            Utilizamos algoritmos de hashing robustos
+                            para garantir que suas senhas sejam
+                            protegidas contra acesso não autorizado
+                        </p>
+                    </section>
+    
+                    <section>
+                        <h3>Proteção de Dados</h3>
+    
+                        <p>
+                            Adotamos medidas de segurança apropriadas
+                            para proteger as suas informações contra
+                            acesso, uso ou divulgação não autorizados.
+                            Implementamos proteção contra
+                            CSRF (Cross-Site Request Forgery) e
+                            XSS (Cross-Site Scripting),
+                            além de validação rigorosa de entrada,
+                            para garantir que seus dados sejam
+                            tratados de maneira segura e protegidos
+                            contra vulnerabilidades comuns
+                        </p>
+                    </section>
+    
+                    <section>
+                        <h3>Cookies</h3>
+    
+                        <p>
+                            Nosso site pode usar cookies para melhorar
+                            a experiência do usuário. Os cookies são
+                            pequenos arquivos que são armazenados no
+                            seu dispositivo e nos ajudam a entender
+                            como você usa nosso site. Você pode
+                            optar por não aceitar cookies, mas isso
+                            pode afetar sua capacidade de utilizar
+                            algumas funcionalidades do nosso site
+                        </p>
+                    </section>
+    
+                    <section>
+                        <h3>Alterações na Política de Privacidade</h3>
+    
+                        <p>
+                            Reservamo-nos o direito de atualizar esta
+                            política de privacidade a qualquer momento.
+                            Quaisquer alterações serão publicadas nesta
+                            página. Recomendamos que você revise nossa
+                            política periodicamente para se manter
+                            informado sobre como estamos protegendo
+                            suas informações
+                        </p>
+                    </section>
+    
+                    <section>
+                        <h3>Contacto</h3>
+    
+                        <p>
+                            Se você tiver alguma dúvida ou preocupação
+                            sobre nossa política de privacidade,
+                            entre em contato conosco através do
+                            e-mail: seu-email@example.com
+                        </p>
+                    </section>
+                </div>
             </div>
         </div>
 
@@ -424,7 +556,7 @@
 
             <div>
                 <p>
-                    <span>&copy; agblimp - 2024</span>, Todos direitos reservados
+                    <span>&copy; agblimp - 2024</span> / Todos direitos reservados / <span onclick = "document.querySelector('.politic-privacit').style.display = 'flex'">Política de Privacidade</span>
                 </p>
             </div>
         </div>

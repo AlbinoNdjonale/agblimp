@@ -15,17 +15,35 @@ def index(request: HttpRequest):
     jobsopening  = models.JobOpening.objects.all()
     requires     = models.Requirements.objects.all()
 
-    return render(request, 'web/index.html', {
-        'services': services,
+    client = None
+    clearcookkie = False
+    if id := request.COOKIES.get('client'):
+        clients = models.Client.objects.filter(id = id)
+        if clients.exists():
+            client = clients.first()
+        else:
+            clearcookkie = True
+
+    
+    response = render(request, 'web/index.html', {
+        'services'   : services,
         'testimonies': testimonies,
-        'faqs': faqs,
+        'faqs'       : faqs,
         'jobsopening': jobsopening,
-        'requires': serializers.serialize('json', requires),
-        'msg': request.GET.get('msg'),
-        'status': request.GET.get('status')
+        'requires'   : serializers.serialize('json', requires),
+        'client'     : client,
+        'msg'        : request.GET.get('msg'),
+        'status'     : request.GET.get('status')
     })
 
+    if clearcookkie:
+        response.delete_cookie('client')
+
+    return response
+
+
 def scheduling(request: HttpRequest):
+    client = None
     if request.method == 'POST':
 
         data_client = {
@@ -70,8 +88,13 @@ def scheduling(request: HttpRequest):
                 'msg': 'Não foi possivel agendar o serviço, tente de novo',
                 'status': 'error'
             }
+    
+    response = HttpResponseRedirect(f'{reverse("web:index")}?{urlencode(query_params)}')
+    
+    if client and request.COOKIES.get('can_use_cookie'):
+        response.set_cookie('client', client.id, max_age = 60*60*24*30)
 
-    return HttpResponseRedirect(f'{reverse("web:index")}?{urlencode(query_params)}')
+    return response
 
 def candidate(request: HttpRequest):
     form_candidate = forms.CreateCandidate(request.POST, request.FILES)

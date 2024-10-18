@@ -124,3 +124,16 @@ const swiper = new Swiper('.swiper-container', {
         clickable: true,
     },
 });
+
+const acceptcookie = () => {
+    document.cookie = 'can_use_cookie=true; max_age=' + 60 * 60 * 24 * 30 + '; path=/'
+    document.getElementById('banner-cookie').style.display = 'none'
+}
+
+const checkcookie = () => {
+    if (!document.cookie.split(';').some((item) => item.trim().startsWith('can_use_cookie='))) {
+        document.getElementById('banner-cookie').style.display = 'block';
+    }
+}
+
+checkcookie()

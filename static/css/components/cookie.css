@@ -1,0 +1,23 @@
+#banner-cookie {
+    background: var(--color-main);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 40;
+    display: none;
+}
+
+#banner-cookie div div {
+    padding: 20px 0;
+}
+
+#banner-cookie div div p {
+    color: var(--color-bg);
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+#banner-cookie div div button {
+    padding: 14px 16px;
+}
