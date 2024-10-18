@@ -1,77 +1,55 @@
 body > main .banner {
-    width: 100%;
-    min-height: 100vh;   
+    position: relative;
+    min-height: 100vh;
+    background-image: url('../../img/banner.jpg');
+    background-size: cover;
+    background-position: center;
     display: flex;
-    align-items: center;
     justify-content: center;
-    background: var(--color-main);
 }
 
 body > main .banner > div {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
+    align-items: start;
+    gap: 40px;
 }
 
-body > main .banner form {
-    max-width: 400px;
-    min-width: 300px;
-    width: 100%;
-}
-
-body > main .banner form section {
-    display: grid;
-}
-
-body > main .banner form h2 {
+body > main .banner > div form {
+    background: transparent;
+    backdrop-filter: blur(10px);
     color: var(--color-bg);
-}
-
-body > main .banner form > section.flex {
-    display: flex;
-    gap: 10px;
-}
-
-body > main .banner form > section.flex input, body > main .banner form > section.flex section {
-    width: 100%;
-}
-
-body > main .banner form > section:not(:last-child) {
-    margin-bottom: 10px;
-}
-
-body > main .banner form section label {
-    font-weight: bold;
-}
-
-#intro {
+    border: 2px solid var(--color-bg);
+    padding: 40px;
     max-width: 500px;
 }
 
-#intro p {
-    font-size: 1.5em;
-    color: var(--color-bg);
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--color-second);
+body > main .banner > div form > section:first-child p {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
 }
 
-#intro img {
-    width: 100%;
+body > main .banner > div form .input {
+    background: var(--color-bg);
 }
 
-@media screen and  (max-width: 700px) {
-    #intro {
+body > main .banner > div form section button {
+    border-radius: 1rem;
+}
+
+body > main .banner #intro p {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--color-mono);
+}
+
+@media screen and (max-width: 991px) {
+    body > main .banner #intro {
         display: none;
     }
 
-    body > main .banner > div {
-        justify-content: center;
-    }
-
-    body > main .banner form {
-        max-width: none;
-        min-width: none;
+    body > main .banner > div form {
+        margin: auto;
+        max-width: 700px;
     }
 }

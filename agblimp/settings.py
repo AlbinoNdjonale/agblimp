@@ -45,7 +45,11 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
-    'apps.core'
+    'apps.servermedia',
+    'apps.core',
+    'apps.web',
+    'storages',
+    'boto3'
 ]
 
 MIDDLEWARE = [
@@ -160,6 +164,36 @@ TEMPLATES = [
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),  # Adiciona o diretório de arquivos estáticos
 ]
+
+MEDIA_URL = '/media/'
+
+if os.getenv('USE_S3') == 'true':
+
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        },
+
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        }
+    }
+
+    AWS_ACCESS_KEY_ID       = os.getenv('ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY   = os.getenv('SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = os.getenv('STORAGE_BUCKET_NAME')
+    AWS_S3_REGION_NAME      = os.getenv('S3_REGION_NAME')
+    AWS_S3_ENDPOINT         = f's3.{AWS_S3_REGION_NAME}.backblazeb2.com'
+    AWS_S3_ENDPOINT_URL     = f'https://{AWS_S3_ENDPOINT}'
+    AWS_S3_CUSTOM_DOMAIN    = f'{AWS_STORAGE_BUCKET_NAME}.{AWS_S3_ENDPOINT}'
+
+    AWS_LOCATION    = ''
+
+    AWS_S3_OBJECT_PARAMETERS = {
+        'CacheControl': 'max-age=86400',
+    }
+
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3.S3Boto3Storage'
 
 try:
     from agblimp.local_settings import *

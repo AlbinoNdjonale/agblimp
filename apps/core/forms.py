@@ -18,11 +18,8 @@ class CreateClient(ModelForm):
 
         fields = '__all__'
 
-class CreateTestimony(ModelForm):
+class CreateCandidate(ModelForm):
     class Meta:
-        model = models.Testimony
+        model = models.Candidate
 
-        fields = [
-            'name_client',
-            'mesage'
-        ]
+        fields = '__all__'

@@ -1,0 +1,90 @@
+#workwithus > div > div {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 30px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+#workwithus > div > div > section {
+    flex: 1 400px;
+    max-width: 500px;
+}
+
+#workwithus > div > div > section:first-child {
+    text-align: center;
+}
+
+#workwithus > div > div h4 {
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.jobopening-wrapper {
+    overflow-y: auto;
+    padding: 8px;
+    max-height: 400px;
+}
+
+#workwithus .jobopening {
+    text-align: left;
+    padding: 20px;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, .7);
+    transition: .4s;
+}
+
+#workwithus .jobopening:hover {
+    transform: translateY(-5px);
+}
+
+#workwithus .jobopening:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+#workwithus .jobopening h5 {
+    font-size: 1.2rem;
+}
+
+#workwithus form {
+    padding-top: 20px;
+    margin: auto;
+    width: 100%;
+}
+
+#workwithus form .input {
+    background: #333;
+    color: var(--color-bg);
+}
+
+#workwithus form button {
+    border-radius: 1rem;
+}
+
+.learn-more-jobopening .popup-content {
+    text-align: left;
+}
+
+.learn-more-jobopening .salary, .learn-more-jobopening .require {
+    font-weight: bold;
+}
+
+.learn-more-jobopening .popup-content .salary {
+    margin-bottom: 7px;
+}
+
+.learn-more-jobopening .popup-content ul {
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+.learn-more-jobopening .popup-content ul li {
+    margin-bottom: 7px;
+}
+
+@media screen and (max-width: 859px) {
+    #workwithus > div > div > section {
+        max-width: 700px;
+        margin: auto;
+    }   
+}

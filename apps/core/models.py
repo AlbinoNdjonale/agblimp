@@ -10,6 +10,7 @@ class Service(models.Model):
     description = models.TextField(null = True)
     price       = models.FloatField()
     duration    = models.IntegerField()
+    image       = models.FileField(upload_to = 'media/service/', max_length = 100)
 
     def __str__(self) -> str:
         return self.name
@@ -75,7 +76,7 @@ class Testimony(models.Model):
     client      = models.ForeignKey(Client, on_delete = models.CASCADE, null = True, blank = True)
     name_client = models.CharField(max_length = 50)
     mesage      = models.TextField()
-    date        = models.DateField(auto_now_add = True)
+    score       = models.IntegerField()
     status      = models.CharField(max_length = 12, choices = [
         ('aprovado', 'Aprovado'),
         ('reprovado', 'Reprovado'),
@@ -83,7 +84,7 @@ class Testimony(models.Model):
     ], default = 'pendente')
 
     def __str__(self) -> str:
-        return f'Depoimento de {self.name_client} em {self.date}'
+        return f'Depoimento de {self.name_client}'
     
     class Meta:
         verbose_name        = 'Testimony'
@@ -128,3 +129,30 @@ class Question(models.Model):
     class Meta:
         verbose_name        = 'Question'
         verbose_name_plural = 'Questions'
+
+class JobOpening(models.Model):
+    title             = models.CharField(max_length = 50)
+    description       = models.TextField()
+    short_description = models.TextField(max_length = 50)
+    salary            = models.FloatField(null = True)
+
+    def __str__(self) -> str:
+        return self.title
+
+class Requirements(models.Model):
+    title      = models.CharField(max_length = 50)
+    required   = models.BooleanField(default = True)
+    jobopening = models.ForeignKey(JobOpening, on_delete = models.CASCADE)
+
+    def __str__(self) -> str:
+        return f'requisito {self.title} para a vaga de {self.jobopening}'
+
+class Candidate(models.Model):
+    name             = models.CharField(max_length = 130)
+    email            = models.EmailField(max_length = 254)
+    job              = models.ForeignKey(JobOpening, on_delete = models.CASCADE)
+    curriculum_vitae = models.FileField(upload_to = 'media/curriculum_vitae/', max_length = 100, null = True, blank = True)
+    mesage           = models.TextField(null = True, blank = True)
+
+    def __str__(self) -> str:
+        return f'candidato {self.name} para a vaga de {self.job}'

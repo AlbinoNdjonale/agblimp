@@ -6,6 +6,7 @@
     <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
     <meta name = "description" content = "web site for a provider servie to cleaning">
     <link rel = "stylesheet" href = "{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <title>Agblimp</title>
 </head>
 <body>
@@ -16,10 +17,19 @@
 
                 {% include "web/components/menu.html" %}
 
-                <button onclick = "expand()" class = "btn-toggle"></button>
+                <button onclick = "expand()" class = "btn-toggle">
+                    <div>
+                        <div></div>
+
+                        <div></div>
+
+                        <div></div>
+                    </div>
+                </button>
             </div>
         </div>
     </header>
+    
     <div id = "menu-mobile" class = "in expand">
         {% include "web/components/menu.html" %}
     </div>
@@ -29,62 +39,66 @@
         <section id = "home" class = "banner">
             <div class = "container">
                 <form action = {% url "web:scheduling" %} method = "post">
+                    <section>
+                        <p>Agendar serviço</p>
+                    </section>
+
                     {% csrf_token %}
 
                     <section>
-                        <h2>Agendar serviço</h2>
+                        <label for = "cep">Cep</label>
+                        <input class = "input" required type = "text" name = "cep" id = "cep">
                     </section>
-    
+
                     <section>
                         <label for = "name">Nome</label>
                         <input class = "input" required type = "text" name = "name" id = "name">
                     </section>
-    
-                    <section>
-                        <label for = "email">Email</label>
-                        <input class = "input" required type = "email" name = "email" id = "email">
-                    </section>
-    
-                    <section>
-                        <label for = "address">Endereço</label>
-                        <input class = "input" required type = "text" name = "address" id = "address">
-                    </section>
-    
+
                     <section class = "flex">
+                        <section>
+                            <label for = "email">Email</label>
+                            <input class = "input" required type = "email" name = "email" id = "email">
+                        </section>
+
                         <section>
                             <label for = "number">Número</label>
                             <input class = "input" required type = "text" name = "number" id = "number">
                         </section>
-    
+                    </section>
+
+                    <section class = "flex">
                         <section>
-                            <label for = "cep">Cep</label>
-                            <input class = "input" required type = "text" name = "cep" id = "cep">
+                            <label for = "address">Endereço</label>
+                            <input class = "input" required type = "text" name = "address" id = "address">
+                        </section>
+        
+                        <section>
+                            <label for = "complemento">Complemento</label>
+                            <input class = "input" type = "text" name = "complemento" id = "complemento">
                         </section>
                     </section>
-    
-                    <section>
-                        <label for = "complemento">Complemento</label>
-                        <input class = "input" type = "text" name = "complemento" id = "complemento">
-                    </section>
-    
-                    <section>
-                        <label for = "way_payment">Forma de pagamento</label>
-                        <select class = "input" required name = "way_payment" id = "way_payment">
-                            <option></option>
-                            <option value = "cartão debito">Cartão debito</option>
-                            <option value = "cartão credito">Cartão credito</option>
-                            <option value = "a vista">A vista</option>
-                        </select>
-                    </section>
-    
-                    <section>
-                        <label for = "service">Serviço</label>
-                        <select class = "input" required name = "service" id = "service">
-                            <option></option>
-                            {% for service in services %}
-                                <option value = "{{ service.id }}"> {{ service.name }} </option>
-                            {% endfor %}
-                        </select>
+
+                    <section class = "flex">
+                        <section>
+                            <label for = "way_payment">Forma de pagamento</label>
+                            <select class = "input" required name = "way_payment" id = "way_payment">
+                                <option></option>
+                                <option value = "cartão debito">Cartão debito</option>
+                                <option value = "cartão credito">Cartão credito</option>
+                                <option value = "a vista">A vista</option>
+                            </select>
+                        </section>
+
+                        <section>
+                            <label for = "service">Serviço</label>
+                            <select class = "input" required name = "service" id = "service">
+                                <option></option>
+                                {% for service in services %}
+                                    <option value = "{{ service.id }}"> {{ service.name }} </option>
+                                {% endfor %}
+                            </select>
+                        </section>
                     </section>
     
                     <section>
@@ -92,25 +106,18 @@
                         <input class = "input" required type = "datetime-local" name = "date" id = "date">
                     </section>
     
-                    <section>
-                        <button class = "btn cta" type = "submit">CONFIRMAR</button>
+                    <section class = "flex">
+                        <button class = "btn cta" type = "submit">AGENDAR SERVIÇO</button>
+
+                        <button class = "btn second" type= "button">ORÇAMENTO ONLINE</button>
                     </section>
                 </form>
     
                 <section id = "intro">
                     <p>
-                        <strong>
-                            Estamos aqui para tornar seu ambiente
-                            mais limpo, saudável e acolhedor.
-                        </strong><br>
-                        Nossos serviços de limpeza são personalizados
-                        para atender às suas necessidades, seja em sua casa,
-                        escritório ou comércio
+                        Estamos aqui para tornar seu ambiente
+                        mais limpo, saudável e acolhedor
                     </p>
-    
-                    <div>
-                        <button class = "btn second">ORÇAMENTO ONLINE</button>
-                    </div>
                 </section>
             </div>
         </section>
@@ -123,16 +130,21 @@
                 <div>
                     {% for service in services %}
                         <div
-                          data-id   = '{{ service.id }}'
-                          data-name = '{{ service.name }}'
+                          data-id          = '{{ service.id }}'
+                          data-name        = '{{ service.name }}'
                           data-description = '{{ service.description }}'
+                          data-image       = '{{ service.image }}'
                           class = "service">
-                            <h3>{{ service.name }}</h3>
-
-                            <p></p>
-
+                            <img src = "{{ service.image }}" alt = "imagem capa do serviço">
+                            
                             <div>
-                                <button onclick = "display_learn_more_servie('{{ service.id }}')">Saber mais</button>
+                                <strong>{{ service.name }}</strong>
+
+                                <p></p>
+
+                                <div>
+                                    <button onclick = "display_learn_more_servie('{{ service.id }}')">Saber mais</button>
+                                </div>
                             </div>
                         </div>
                     {% endfor %}
@@ -143,44 +155,159 @@
         {# section testimony #}
         <section id = "testimonies">
             <div class = "container">
-                <h2 class = "title">O que os nossos clientes dizem sobre nós</h2>
+                <h2 class = "title">Histórias de sucesso com nossos serviços</h2>
 
-                <div>
-                    <section>
-                        <div id = "wrapper-testimony">
-                            {% for testimony in testimonies %}
+                <div class = "swiper-container">
+                    <div class = "swiper-wrapper">
+                        {% for testimony in testimonies %}
+                            <div class = "swiper-slide">
                                 <div class = "testimony">
                                     <header>
                                         <h3>{{ testimony.name_client }}</h3>
-                                        <small>
-                                            <em>{{ testimony.date }}</em>
-                                        </small>
-                                    </header>
-                                    <p>
-                                        <span>''</span>{{ testimony.mesage }}
-                                    </p>
+                                            <small>
+                                                <em>Avaliação: {{ testimony.score }}/5</em>
+                                            </small>
+                                        </header>
+                                        <p>
+                                            '' {{ testimony.mesage }}
+                                        </p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination"></div>                  
+                </div>
+
+                <section>
+                    <a href = "#home"><button class = "btn second">solicite seu serviço agora</button></a>
+                </section>
+            </div>
+        </section>
+
+        {# section Faq #}
+        <section class = "faq-section" id = "faqs">
+            <div class = "container">
+                <div class = "faq-header">
+                    <h2 class = "title">Como podemos ajudar você?</h2>
+                    <p class = "come">Encontre as respostas para as perguntas mais frequentes ou entre em contato conosco.</p>
+                    
+                    <!-- Barra de pesquisa -->
+                    <div class = "search">
+                      <input oninput = "filter(this.value, 'faq-item', 'summary')" type = "search" placeholder="Digite sua dúvida aqui..." id="faqSearchInput">
+                    </div>
+                </div>
+
+                <!-- Perguntas Frequentes -->
+                <div class="faq-items">
+                    {% for faq in faqs %}
+                        <section class = "faq faq-item">
+                            <details>
+                                <summary onclick = "this.classList.toggle('active')" class = "faq-question">{{ faq.question }}</summary>
+
+                                <p class = "faq-answer">{{ faq.response }}</p>
+                            </details>
+                        </section>
+                    {% endfor %}
+                </div>
+
+                <!-- Botão CTA -->
+                <div class="faq-cta">
+                   <a href="">
+                        <button class="cta-btn">
+                            <div>
+                                <img src = "{% static 'img/whatsapp.svg' %}" alt = "imagem do whatsapp">
+                                <p>
+                                    Fale Conosco Agora
+                                </p>
+                            </div>
+                        </button>
+                   </a>
+                </div>
+            </div>
+        </section>
+
+        {# section work with us #}
+        <section id = "workwithus">
+            <div class = "container">
+                <h3 class = "title">Venha fazer parte da nossa equipe</h3>
+
+                <p class = "come">
+                    Estamos sempre em busca de pessoas apaixonadas,
+                    inovadoras e comprometidas. Se você se
+                    identifica com nossa missão e quer crescer
+                    conosco, venha fazer parte da nossa equipe!
+                </p>
+
+                <div>
+                    <section>
+                        <h4>Vagas disponíveis</h4>
+
+                        <div class = "search">
+                            <input oninput = "filter(this.value, 'jobopening', 'h5')" type = "search" placeholder = "procure por vagas aqui...">
+                        </div>
+
+                        <div hidden>
+                            {{ requires|json_script:"requires" }}
+                        </div>
+
+                        <div class = "jobopening-wrapper">
+                            {% for jobopening in jobsopening %}
+                                <a href = "#form-job" hidden id = "link-form-job"></a>
+                                <div
+                                  onclick = "display_learn_more_jobopening('{{ jobopening.id }}')"
+                                  data-id = '{{ jobopening.id }}'
+                                  data-title = '{{ jobopening.title }}'
+                                  data-description = '{{ jobopening.description }}'
+                                  data-salary = '{{ jobopening.salary }}'
+                                  class   = "jobopening">
+                                    <h5>{{ jobopening.title }}</h5>
+
+                                    <p>{{ jobopening.short_description }}</p>
                                 </div>
                             {% endfor %}
                         </div>
                     </section>
 
-                    <section>
-                        <form action = "{% url 'web:testimony' %}" method = "post">
+                    <section id = "form-job">
+                        <h4>Candidata-se a uma vaga</h4>
+
+                        <form action = "{% url 'web:candidate' %}" method = "post" enctype = "multipart/form-data">
                             {% csrf_token %}
-                            <h3>Deixe seu depoimento</h3>
-
                             <section>
-                                <label for = "name_client">Nome</label>
-                                <input class = "input" required type = "text" name = "name_client" id = "name_client">
+                                <label for = "fullname">Nome completo *</label>
+                                <input class = "input" type = "text" id = "fullname" required name = "name">
                             </section>
 
                             <section>
-                                <label for = "mesage">Mensagem</label>
-                                <textarea class = "input" required rows = "7" name = "mesage" id = "mesage"></textarea>
+                                <label for = "email1">Email *</label>
+                                <input class = "input" type = "email" id = "email1" required name = "email">
                             </section>
 
                             <section>
-                                <button class = "btn cta">enviar</button>
+                                <label for = "job">Cargo de interece *</label>
+                                <select class = "input" name = "job" id = "job">
+                                    <option value = ""></option>
+                                    {% for job in jobsopening %}
+                                        <option value = "{{ job.id }}">{{ job.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </section>
+
+                            <section>
+                                <label for = "curriculum_vitae">Curriculum vitae (opcional)</label>
+                                <input class = "input" type = "file" id = "curriculum_vitae" name = "curriculum_vitae">
+                            </section>
+
+                            <section>
+                                <label for = "mesage">Mensagem (opcional)</label>
+                                <textarea class = "input" maxlength = "300" name = "mesage" id = "mesage" rows = "7" placeholder = "deixe-nos uma mensagem"></textarea>
+                            </section>
+
+                            <section>
+                                <button class = "btn cta">enviar candidatura</button>
                             </section>
                         </form>
                     </section>
@@ -188,17 +315,45 @@
             </div>
         </section>
 
+        <a href = "">
+            <div class = "whatsapp-button ">
+                <img src = "{% static 'img/whatsapp.svg' %}" alt = "imagem do whatsapp">
+            </div>
+        </a>
+
         <div class = "learn-more-service">
-            <div>
-                <div>
-                    <button onclick = "close_context('.learn-more-service')"></button>
-                </div>
+            <div class = "popup-content">
+                <button onclick = "close_context('.learn-more-service')" class = "close-btn">&times;</button>
+                
+                <h2 class = "popup-title"></h2>
+                
+                <img src = "" alt = "" class = "popup-image">
+                
+                <p class = "popup-text"></p>
+                
+                <a href = "#home">
+                    <button class = "btn second">Agendar Serviço</button>
+                </a>
 
-                <h2></h2>
+                <button class = "btn cta">Orçamento online</button>
+            </div>
+        </div>
 
-                <p></p>
+        <div class = "learn-more-jobopening">
+            <div class = "popup-content">
+                <button onclick = "close_context('.learn-more-jobopening')" class = "close-btn">&times;</button>
 
-                <button id = "c">Agendar Serviço</button>
+                <h2 class = "popup-title"></h2>
+                
+                <p class = "popup-text"></p>
+
+                <p class = "salary"></p>
+
+                <p class = "require">Requisitos</p>
+
+                <ul></ul>
+                
+                <button class = "btn second">Candidata-se a esta vaga</button>
             </div>
         </div>
 
@@ -215,6 +370,67 @@
             </div>
         {% endif %}
     </main>
+
+    <footer>
+        <div class = "container">
+            <div>
+                <section>
+                    <h3>Sobre nós</h3>
+
+                    <p class = "about">
+                        Na agblimp, estamos
+                        comprometidos em oferecer
+                        serviços de limpeza de alta
+                        qualidade para residências e
+                        empresas. Com uma equipe
+                        treinada e dedicada, nossa
+                        missão é proporcionar um
+                        ambiente limpo, seguro e
+                        agradável para nossos clientes,
+                        garantindo que cada espaço seja
+                        tratado com cuidado e respeito
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Horário comercial</h3>
+
+                    <p>Seg - Sex</p>
+                    <p class = "time">09h00 às 19h00</p>
+
+                    <p>Sabado</p>
+                    <p class = "time">09h00 às 17h00</p>
+                </section>
+
+                <section>
+                    <h3>Inormações de contacto</h3>
+
+                    <ul>
+                        <li><img src = "{% static 'img/envelope.svg' %}" alt = "imagem de email">example@gmail.com</li>
+                        <li><img src = "{% static 'img/phone.svg' %}" alt = "imagem de telefone">+244 999999999</li>
+                    </ul>
+
+                    <div class = "social">
+                        <a href = "">
+                            <img src = "{% static 'img/facebook.svg' %}" alt = "imagem do facebook">
+                        </a>
+
+                        <a href = "">
+                            <img src = "{% static 'img/instagram.svg' %}" alt = "imagem do instagram">
+                        </a>
+                    </div>
+                </section>
+            </div>
+
+            <div>
+                <p>
+                    <span>&copy; agblimp - 2024</span>, Todos direitos reservados
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src = "{% static 'js/app.js' %}"></script>
 </body>
 </html>

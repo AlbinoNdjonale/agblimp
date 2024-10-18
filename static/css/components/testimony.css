@@ -1,56 +1,65 @@
-#testimonies {
-    padding: 30px 0;
-    background: var(--color-main);
-    color: var(--color-bg);
-}
-
-#testimonies > div > div {
-    padding: 20px 0;
-}
-
-.testimony {
+.swiper-container {
     width: 100%;
-    color: var(--color-fg);
-    background: var(--color-bg);
-    padding: 20px;
-    border-radius: 5px;
-    max-width: 500px;
-    min-height: 220px;
-    margin: auto;
-    display: none;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+    height: 300px;
 }
 
-.testimony span {
-    color: var(--color-second);
-    font-size: 50px;
-    font-weight: bold;
+.swiper-slide {
+    border-radius: 5px;
+    padding: 15px;
+    width: 100%;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #000; /* Cor dos botões */
+  position: absolute; /* Faz com que eles se sobreponham ao conteúdo */
+  top: 50%; /* Centraliza os botões verticalmente */
+  transform: translateY(-50%); /* Ajusta o alinhamento */
+  z-index: 20;
+}
+
+.swiper-button-next {
+    right: 10px; /* Ajusta a posição do botão de próximo à direita */
+  }
+  
+.swiper-button-prev {
+    left: 10px; /* Ajusta a posição do botão anterior à esquerda */
+}
+  
+.testimony {
+    background: var(--color-main);
+    max-width: 700px;
+    margin: auto;
+    border-radius: 5px;
+    overflow: hidden;
+    color: var(--color-bg);
+    height: 100%;
 }
 
 .testimony header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
+    background: var(--color-mono);
+    padding: 20px;
 }
 
-.testimony p {
-    margin-left: 10px;
+#testimonies > div {
+    padding: 20px;
+}
+
+#testimonies > div > div p {
     word-break: break-all;
+    padding: 20px;
+    overflow: auto;
 }
 
-#testimonies form {
-    max-width: 500px;
+#testimonies > div section {
+    max-width: 700px;
     margin: auto;
+    padding: 0 15px;
 }
 
-#testimonies form h3 {
-    margin-bottom: 20px;
-    margin-top: 40px;
-}
-
-#testimonies form section {
-    display: grid;
-}
-
-#testimonies form section:not(:last-child) {
-    margin-bottom: 10px;
+#testimonies > div section button {
+    padding: 15px;
 }

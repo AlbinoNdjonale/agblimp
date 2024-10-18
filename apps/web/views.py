@@ -1,6 +1,7 @@
 from apps.core import forms
 from apps.core import models
-from django.http import HttpRequest, HttpResponseRedirect
+from django.core import serializers
+from django.http import HttpRequest, HttpResponseRedirect, FileResponse, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
 from urllib.parse import urlencode
@@ -8,12 +9,18 @@ from urllib.parse import urlencode
 # Create your views here.
 
 def index(request: HttpRequest):
-    services    = models.Service.objects.all()
-    testimonies = models.Testimony.objects.filter(status = 'aprovado')
+    services     = models.Service.objects.all()
+    testimonies  = models.Testimony.objects.filter(status = 'aprovado')
+    faqs         = models.Faq.objects.all()
+    jobsopening  = models.JobOpening.objects.all()
+    requires     = models.Requirements.objects.all()
 
     return render(request, 'web/index.html', {
         'services': services,
         'testimonies': testimonies,
+        'faqs': faqs,
+        'jobsopening': jobsopening,
+        'requires': serializers.serialize('json', requires),
         'msg': request.GET.get('msg'),
         'status': request.GET.get('status')
     })
@@ -66,25 +73,23 @@ def scheduling(request: HttpRequest):
 
     return HttpResponseRedirect(f'{reverse("web:index")}?{urlencode(query_params)}')
 
-def testimony(request: HttpRequest):
-    form = forms.CreateTestimony(request.POST)
+def candidate(request: HttpRequest):
+    form_candidate = forms.CreateCandidate(request.POST, request.FILES)
+        
+    try:
+        assert form_candidate.is_valid()
 
-    if form.is_valid():
-        testimony = models.Testimony(
-            status = 'pendente',
-            mesage = request.POST['mesage'],
-            name_client = request.POST['name_client']
-        )
-        testimony.save()
+        form_candidate.save()
 
         query_params = {
-            'msg': 'Agradecemos pelo seu depoimento',
+            'msg': 'Candidatura feita com sucesso',
             'status': 'ok'
         }
-    else:
+    except:
         query_params = {
-            'msg': 'Não foi possivel guardar o seu depoimento, tente de novo',
-            'status': 'erro'
+            'msg': 'Não foi possivel registrar a sua candidatura',
+            'status': 'err'
         }
+
 
     return HttpResponseRedirect(f'{reverse("web:index")}?{urlencode(query_params)}')
