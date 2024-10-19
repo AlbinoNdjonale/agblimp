@@ -2,6 +2,38 @@ from django.contrib.auth.models import User
 from django.db import models
 import uuid
 
+class Collaborator(models.Model):
+    user        = models.OneToOneField(User, on_delete = models.CASCADE)
+    number      = models.CharField(max_length = 15)
+    rg          = models.CharField(max_length = 20, null = True, blank = True, unique = True)
+    cpf         = models.CharField(max_length = 14, null = True, blank = True)
+    address     = models.CharField(max_length = 255)
+    cep         = models.CharField(max_length = 10)
+    rua         = models.CharField(max_length = 255)
+    complemento = models.CharField(max_length = 100, null = True, blank = True)
+    cargo       = models.CharField(max_length = 100)
+
+    def __str__(self) -> str:
+        return f'Colaborador {self.user.username}'
+
+class Transport(models.Model):
+    motorista = models.CharField(max_length = 255)
+    time      = models.TimeField()
+    type = models.CharField(max_length = 7, choices = [
+        ('carro', 'Carro'),
+        ('ônibus', 'Ônibus'),
+        ('moto', 'Moto')
+    ])
+    value    = models.DecimalField(max_digits = 10, decimal_places = 2)
+    paid_for = models.CharField(max_length = 50, choices = [
+        ('empresa', 'Empresa'),
+        ('colaborador', 'Colaborador'),
+        ('cliente', 'Cliente'),
+    ])
+
+    def __str__(self):
+        return f'Transporte {self.id}'
+
 class Service(models.Model):
     '''
       Modelo serviço
@@ -12,7 +44,7 @@ class Service(models.Model):
     duration    = models.IntegerField()
     image       = models.FileField(upload_to = 'media/service/', max_length = 100)
 
-    def __str__(self) -> str:
+    def c_str__(self) -> str:
         return self.name
     
     class Meta:
@@ -28,10 +60,12 @@ class Client(models.Model):
     id          = models.UUIDField(primary_key = True, editable = False, default = uuid.uuid4)
     name        = models.CharField(max_length = 50)
     email       = models.EmailField(max_length = 254)
-    number      = models.CharField(max_length = 11)
-    address      = models.CharField(max_length = 100)
+    phone       = models.CharField(max_length = 15)
+    number      = models.CharField(max_length = 10, null = True)
+    address     = models.CharField(max_length = 100)
     cep         = models.CharField(max_length = 11)
     complemento = models.CharField(max_length = 20, null = True, blank = True)
+    road        = models.CharField(max_length = 255)
 
     def __str__(self) -> str:
         return self.name
@@ -44,11 +78,14 @@ class Scheduling(models.Model):
     '''
       Modelo agendamento
     '''
-    service = models.ForeignKey(Service, on_delete = models.CASCADE)
-    client  = models.ForeignKey(Client, on_delete = models.CASCADE)
-    date    = models.DateTimeField()
+    service           = models.ForeignKey(Service, on_delete = models.CASCADE)
+    client            = models.ForeignKey(Client, on_delete = models.CASCADE)
+    date              = models.DateTimeField()
+    registration_date = models.DateTimeField(auto_now_add = True)
     status  = models.CharField(max_length = 12, choices = [
-        ('confirmado', 'Confirmado'),
+        ('em andamento', 'Em andamento'),
+        ('reprovado', 'Reprovado'),
+        ('finalizado', 'Finalizado'),
         ('cancelado', 'Cancelado'),
         ('pendente', 'Pendente')
     ], default = 'pendente')
@@ -57,7 +94,10 @@ class Scheduling(models.Model):
         ('cartão debito', 'Cartão debito'),
         ('a vista', 'A vista')
     ])
-    collaborator = models.ForeignKey(User, on_delete = models.DO_NOTHING, null = True)
+    collaborator       = models.ForeignKey(Collaborator, on_delete = models.DO_NOTHING, null = True)
+    outbound_transport = models.ForeignKey(Transport, on_delete = models.DO_NOTHING, null = True, related_name = 'outbound_transport')
+    return_transport   = models.ForeignKey(Transport, on_delete = models.DO_NOTHING, null = True, related_name = 'return_transport')
+    hour_spent         = models.DecimalField(max_digits = 5, decimal_places = 2, null = True)
 
     def __str__(self) -> str:
         return f'Agedamento de {self.client.name} em {self.date}'
@@ -109,27 +149,6 @@ class Faq(models.Model):
         verbose_name        = 'Faq'
         verbose_name_plural = 'Faqs'
 
-class Question(models.Model):
-    '''
-      Lembra do modelo Faq,
-    pois este é modelo das perguntas
-    feitas pelos os usuários
-    '''
-    client      = models.ForeignKey(Client, on_delete = models.CASCADE, null = True, blank = True)
-    name_client = models.CharField(max_length = 50)
-    question    = models.TextField()
-    date        = models.DateField(auto_now_add = True)
-
-    def __str__(self) -> str:
-        if len(self.question) <= 50:
-            return self.question
-        
-        return self.question[:50]+'...'
-    
-    class Meta:
-        verbose_name        = 'Question'
-        verbose_name_plural = 'Questions'
-
 class JobOpening(models.Model):
     title             = models.CharField(max_length = 50)
     description       = models.TextField()
@@ -156,3 +175,48 @@ class Candidate(models.Model):
 
     def __str__(self) -> str:
         return f'candidato {self.name} para a vaga de {self.job}'
+
+class PaymentHistory(models.Model):
+    scheduling = models.ForeignKey(Scheduling, on_delete = models.CASCADE)
+    status     = models.CharField(max_length = 50, choices = [
+        ('pago', 'Pago'),
+        ('não pago', 'Não pago')
+    ])
+    payment_date =  models.DateField()
+
+    def __str__(self):
+        return f'Historico de pagamento do {self.scheduling}'
+
+class CompletedSerive(models.Model):
+    scheduling           = models.ForeignKey(Scheduling, on_delete = models.CASCADE)
+    completed_date       = models.DateField()
+    customer_satisfation = models.CharField(max_length = 50, choices = [
+        ('satisfeito', 'Satisfeito'),
+        ('muito satisfeito', 'Muito satisfeito'),
+        ('insatisfeito', 'insatisfeito'),
+        ('muito insatisfeito', 'Muito insatisfeito')
+    ])
+
+    def __str__(self):
+        return f'{self.scheduling} completado'
+
+class CanceledAppointment(models.Model):
+    scheduling = models.ForeignKey(Scheduling, on_delete = models.CASCADE)
+    reason     = models.TextField()
+    date       = models.DateField(auto_now_add = True)
+
+    def __str__(self):
+        return f'{self.scheduling} cancelado'
+
+class ServiceLocation(models.Model):
+    name         = models.CharField(max_length = 255)
+    min_cep      = models.CharField(max_length = 10)
+    max_cep      = models.CharField(max_length = 10)
+    city         = models.CharField(max_length = 100)
+    estate       = models.CharField(max_length = 50)
+    active       = models.BooleanField()
+    date         = models.DateField(auto_now_add = True)
+    collaborator = models.ForeignKey(Collaborator, on_delete = models.CASCADE, null = True)
+
+    def __str__(self):
+        return f'Local de atendimento {self.name}'
