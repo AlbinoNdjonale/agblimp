@@ -126,7 +126,7 @@ const swiper = new Swiper('.swiper-container', {
 });
 
 const acceptcookie = () => {
-    document.cookie = 'can_use_cookie=true; max_age=' + 60 * 60 * 24 * 30 + '; path=/'
+    document.cookie = 'can_use_cookie=true; max_age=' + (60 * 60 * 24 * 30) + '; path=/'
     document.getElementById('banner-cookie').style.display = 'none'
 }
 

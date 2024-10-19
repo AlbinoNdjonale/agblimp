@@ -60,7 +60,7 @@ class SchedulingModelTest(TestCase):
         scheduling = models.Scheduling(
             service     = service,
             client      = client,
-            date        = '2024-10-09 13:00',
+            date        = '2024-10-09T13:00:00',
             way_payment = 'a vista'
         )
 
@@ -68,7 +68,7 @@ class SchedulingModelTest(TestCase):
 
         self.assertEqual(scheduling.service, service)
         self.assertEqual(scheduling.client, client)
-        self.assertEqual(scheduling.date, '2024-10-09 13:00')
+        self.assertEqual(scheduling.date, '2024-10-09T13:00:00')
         self.assertEqual(scheduling.way_payment, 'a vista')
         self.assertEqual(scheduling.status, 'pendente')
         self.assertIn('id', scheduling.__dict__.keys())
@@ -77,7 +77,8 @@ class TestimonyModelTest(TestCase):
     def test_create_testimony(self):        
         testimony = models.Testimony(
             name_client = 'nome do cliente',
-            mesage      = 'uma mensagem'
+            mesage      = 'uma mensagem',
+            score       = '4'
         )
 
         testimony.save()
