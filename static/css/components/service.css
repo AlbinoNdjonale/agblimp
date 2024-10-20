@@ -3,7 +3,6 @@
     flex-wrap: wrap;
     gap: 15px;
     justify-content: space-around;
-    align-items: start;
 }
 
 #services > div > div > div {
@@ -14,6 +13,9 @@
     background: var(--color-main);
     color: var(--color-bg);
     max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 #services > div > div > div:hover {

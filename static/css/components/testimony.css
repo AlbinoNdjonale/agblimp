@@ -2,7 +2,7 @@
     background: #ccc;
 }
 
-.swiper-container {
+#testimonies .swiper-container {
     width: 100%;
     height: 200px;
     overflow: hidden;
@@ -10,7 +10,7 @@
     height: 300px;
 }
 
-.swiper-slide {
+#testimonies .swiper-slide {
     border-radius: 5px;
     padding: 15px;
     width: 100%;
@@ -34,36 +34,78 @@
 }
   
 .testimony {
+    padding: 20px;
     background: var(--color-main);
-    max-width: 700px;
+    text-align: center;
+    border-radius: 20px;
+    max-width: 500px;
     margin: auto;
-    border-radius: 5px;
-    overflow: hidden;
-    color: var(--color-bg);
-    height: 100%;
 }
 
-.testimony header {
-    background: var(--color-mono);
+.testimony > div {
     padding: 20px;
+    border-radius: 20px;
+    border: 1px solid var(--color-bg);
 }
 
-#testimonies > div {
+.testimony > div > div {
     padding: 20px;
+    border-radius: 20px;
+    background: var(--color-bg);
+    padding-top: 47px;
+    position: relative;
 }
 
-#testimonies > div > div p {
+.testimony > div > div p {
     word-break: break-all;
-    padding: 20px;
-    overflow: auto;
+    max-height: 40px;
+    overflow: hidden;
+    padding-top: 15px;
+}
+
+.testimony .prophile {
+    top: -55px;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    width: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    aspect-ratio: 1/1;
+    margin: auto;
+    border: 2px solid var(--color-bg);
+}
+
+.testimony img {
+    width: 100%;
+    display: block;
+}
+
+.testimony .score {
+    display: flex;
+    justify-content: center;
+}
+
+.testimony .score img {
+    width: 23px;
 }
 
 #testimonies > div section {
-    max-width: 700px;
-    margin: auto;
-    padding: 0 15px;
+    text-align: center;
 }
 
 #testimonies > div section button {
     padding: 15px;
+    transition: .3s;
+}
+
+#testimonies > div section button:hover {
+    transform: scale(1.1);
+}
+
+#testimonies > div section button span {
+    padding: 5px 7px;
+    background: var(--color-bg);
+    border-radius: 5px;
+    margin-left: 10px;
 }

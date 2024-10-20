@@ -13,25 +13,44 @@
     <header>
         <div class = "container">
             <div>
-                <h1>Agblimp</h1>
+                <div class = "flex">
+                    <button onclick = "expand()" class = "btn-toggle">
+                        <div>
+                            <div></div>
+    
+                            <div></div>
+    
+                            <div></div>
+                        </div>
+                    </button>
+
+                    <a href = "#home" class = "flex" id = "logo">
+                        <img src = "{% static 'img/logo.webp' %}" alt = "logo">
+                        <h1>Agblimp</h1>
+                    </a>
+                </div>
 
                 {% include "web/components/menu.html" %}
-
-                <button onclick = "expand()" class = "btn-toggle">
-                    <div>
-                        <div></div>
-
-                        <div></div>
-
-                        <div></div>
-                    </div>
-                </button>
             </div>
         </div>
     </header>
     
     <div id = "menu-mobile" class = "in expand">
+        <div>
+            <button onclick = "expand()">&times;</button>
+        </div>
         {% include "web/components/menu.html" %}
+    </div>
+
+    <div class = "swiper-banner">
+        <div class = "swiper-wrapper">
+            <div class = "swiper-slide first"></div>
+            <div class = "swiper-slide second"></div>
+        </div>
+
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
     </div>
 
     <main>
@@ -112,13 +131,6 @@
                         <button class = "btn second" type= "button">ORÇAMENTO ONLINE</button>
                     </section>
                 </form>
-    
-                <section id = "intro">
-                    <p>
-                        Estamos aqui para tornar seu ambiente
-                        mais limpo, saudável e acolhedor
-                    </p>
-                </section>
             </div>
         </section>
 
@@ -139,12 +151,14 @@
                             
                             <div>
                                 <strong>{{ service.name }}</strong>
+                            </div>
 
+                            <div>
                                 <p></p>
+                            </div>
 
-                                <div>
-                                    <button onclick = "display_learn_more_servie('{{ service.id }}')">Saber mais</button>
-                                </div>
+                            <div>
+                                <button onclick = "display_learn_more_servie('{{ service.id }}')">Saber mais</button>
                             </div>
                         </div>
                     {% endfor %}
@@ -162,15 +176,31 @@
                         {% for testimony in testimonies %}
                             <div class = "swiper-slide">
                                 <div class = "testimony">
-                                    <header>
-                                        <h3>{{ testimony.name_client }}</h3>
-                                            <small>
-                                                <em>Avaliação: {{ testimony.score }}/5</em>
-                                            </small>
-                                        </header>
-                                        <p>
-                                            '' {{ testimony.mesage }}
-                                        </p>
+                                    <div>
+                                        <div>
+                                            <div class = 'prophile'>
+                                                <img src = "{{ testimony.capa }}" alt = "imagem da testemunha">
+                                            </div>
+
+                                            <h3>{{ testimony.name_client }}</h3>
+
+                                            <div class = 'score'>
+                                                {% for i in "0 1 2 3 4"|cut:" "|make_list %}
+                                                    {% if testimony.score >= forloop.counter %}
+                                                        <img src = "{% static 'img/star-solid.svg' %}" alt = "star-solid">
+                                                    {% elif testimony.score == forloop.counter0|floatformat:1 %}
+                                                    <img src = "{% static 'img/star-half.svg' %}" alt = "star-solid">
+                                                    {% else %}
+                                                    <img src = "{% static 'img/star.svg' %}" alt = "star-solid">
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+
+                                            <p>
+                                                {{ testimony.mesage }}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}
@@ -182,7 +212,12 @@
                 </div>
 
                 <section>
-                    <a href = "#home"><button class = "btn second">solicite seu serviço agora</button></a>
+                    <a href = "#home">
+                        <button class = "btn second">
+                            solicite seu serviço agora
+                            <span class="icon">➔</span>
+                        </button>
+                    </a>
                 </section>
             </div>
         </section>

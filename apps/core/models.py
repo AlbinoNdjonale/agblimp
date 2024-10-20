@@ -116,7 +116,8 @@ class Testimony(models.Model):
     client      = models.ForeignKey(Client, on_delete = models.DO_NOTHING, null = True, blank = True)
     name_client = models.CharField(max_length = 50)
     mesage      = models.TextField()
-    score       = models.IntegerField()
+    score       = models.DecimalField(max_digits = 2, decimal_places = 1)
+    capa        = models.FileField(upload_to = 'media/testimony/', max_length = 100)
     status      = models.CharField(max_length = 12, choices = [
         ('aprovado', 'Aprovado'),
         ('reprovado', 'Reprovado'),

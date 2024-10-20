@@ -105,13 +105,25 @@ const filter = (filter, item_class, tag_content) => {
     })
 }
 
-const swiper = new Swiper('.swiper-container', {
-    loop: true, // Permite que o carrossel seja contínuo
-    speed: 2000,
+const acceptcookie = () => {
+    document.cookie = 'can_use_cookie=true; max_age=' + (60 * 60 * 24 * 30) + '; path=/'
+    document.getElementById('banner-cookie').style.display = 'none'
+}
+
+const checkcookie = () => {
+    if (!document.cookie.split(';').some((item) => item.trim().startsWith('can_use_cookie='))) {
+        document.getElementById('banner-cookie').style.display = 'block';
+    }
+}
+
+checkcookie()
+
+const swiperbanner = new Swiper('.swiper-banner', {
+    loop: true,
     
     autoplay: {
-        delay: 5000, // Tempo de exibição de cada slide (em milissegundos)
-        disableOnInteraction: false, // Continua a auto rotação após interação
+        delay: 6000,
+        disableOnInteraction: false,
     },
 
     navigation: {
@@ -125,15 +137,22 @@ const swiper = new Swiper('.swiper-container', {
     },
 });
 
-const acceptcookie = () => {
-    document.cookie = 'can_use_cookie=true; max_age=' + (60 * 60 * 24 * 30) + '; path=/'
-    document.getElementById('banner-cookie').style.display = 'none'
-}
+const swiper = new Swiper('.swiper-container', {
+    loop: true,
+    speed: 2000,
+    
+    autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+    },
 
-const checkcookie = () => {
-    if (!document.cookie.split(';').some((item) => item.trim().startsWith('can_use_cookie='))) {
-        document.getElementById('banner-cookie').style.display = 'block';
-    }
-}
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+    },
 
-checkcookie()
+    pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+    },
+});
