@@ -52,7 +52,7 @@ def scheduling(request: HttpRequest):
                 'name',
                 'email',
                 'address',
-                'number',
+                'phone',
                 'cep',
                 'complemento'
             ]
@@ -71,8 +71,12 @@ def scheduling(request: HttpRequest):
         form_scheduling = forms.CreateScheduling(data_scheduling)
 
         if form_client.is_valid() and form_scheduling.is_valid():
-            client = models.Client(**data_client)
-            client.save()
+            if  (id := request.COOKIES.get('client')) and \
+                    (clients := models.Client.objects.filter(id = id, name = data_client['name'], email = data_client['email'])).exists():
+                        client = clients.first()
+            else:
+                client = models.Client(**data_client)
+                client.save()
             
             data_scheduling['service'] = models.Service.objects.get(id = data_scheduling['service'])
             

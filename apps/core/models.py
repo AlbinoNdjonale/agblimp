@@ -44,7 +44,7 @@ class Service(models.Model):
     duration    = models.IntegerField()
     image       = models.FileField(upload_to = 'media/service/', max_length = 100)
 
-    def c_str__(self) -> str:
+    def __str__(self) -> str:
         return self.name
     
     class Meta:
@@ -61,11 +61,11 @@ class Client(models.Model):
     name        = models.CharField(max_length = 50)
     email       = models.EmailField(max_length = 254)
     phone       = models.CharField(max_length = 15)
-    number      = models.CharField(max_length = 10, null = True)
+    number      = models.CharField(max_length = 10, null = True, blank = True)
     address     = models.CharField(max_length = 100)
     cep         = models.CharField(max_length = 11)
     complemento = models.CharField(max_length = 20, null = True, blank = True)
-    road        = models.CharField(max_length = 255)
+    road        = models.CharField(max_length = 255, null = True, blank = True)
 
     def __str__(self) -> str:
         return self.name
@@ -113,7 +113,7 @@ class Testimony(models.Model):
     nulo onde o name_client só será necessário
     se o client for nulo
     '''
-    client      = models.ForeignKey(Client, on_delete = models.CASCADE, null = True, blank = True)
+    client      = models.ForeignKey(Client, on_delete = models.DO_NOTHING, null = True, blank = True)
     name_client = models.CharField(max_length = 50)
     mesage      = models.TextField()
     score       = models.IntegerField()
