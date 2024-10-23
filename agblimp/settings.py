@@ -208,6 +208,9 @@ if os.getenv('USE_S3') == 'true':
 
     DEFAULT_FILE_STORAGE = 'storages.backends.s3.S3Boto3Storage'
 
+ALLOWED_HOSTS = ['*']
+CORS_ALLOWED_ORIGINS = ['*']
+
 try:
     from agblimp.local_settings import *
 except:
