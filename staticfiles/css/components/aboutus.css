@@ -1,0 +1,75 @@
+#about-us > div > section {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+#about-us > div > section.about-top > div {
+    flex: 1 400px;
+}
+
+#about-us .expirence {
+    background: var(--color-main);
+    padding: 30px;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: bold;
+    color: var(--color-bg);
+    margin-top: 15px;
+}
+
+#about-us .expirence span {
+    font-size: 40px;
+}
+
+#about-us .our {
+    gap: 15px;
+    display: grid;
+}
+
+#about-us .our > div {
+    padding: 20px;
+    border-radius: 5px;
+    background: #ccc;
+    text-align: center;
+    display: grid;
+    gap: 10px;
+}
+
+#about-us .our > div img {
+    margin: auto;
+}
+
+#about-us .our > div span {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#about-us .our > div p {
+    color: #444;
+}
+
+#about-us > div > section.about-bottom {
+    padding: 40px 0;
+    gap: 10px;
+}
+
+#about-us > div > section.about-bottom > div {
+    flex: 1 200px;
+    background-color: rgba(8, 109, 172, .5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 40px;
+    display: grid;
+    text-align: center;
+    font-size: 25px;
+    font-weight: lighter;
+    color: var(--color-bg);
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+}
+
+#about-us > div > section.about-bottom > div span:first-child {
+    font-size: 55px;
+}

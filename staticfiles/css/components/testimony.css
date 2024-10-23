@@ -1,0 +1,111 @@
+#testimonies {
+    background: #ccc;
+}
+
+#testimonies .swiper-container {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+    height: 300px;
+}
+
+#testimonies .swiper-slide {
+    border-radius: 5px;
+    padding: 15px;
+    width: 100%;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #000; /* Cor dos botões */
+  position: absolute; /* Faz com que eles se sobreponham ao conteúdo */
+  top: 50%; /* Centraliza os botões verticalmente */
+  transform: translateY(-50%); /* Ajusta o alinhamento */
+  z-index: 20;
+}
+
+.swiper-button-next {
+    right: 10px; /* Ajusta a posição do botão de próximo à direita */
+  }
+  
+.swiper-button-prev {
+    left: 10px; /* Ajusta a posição do botão anterior à esquerda */
+}
+  
+.testimony {
+    padding: 20px;
+    background: var(--color-main);
+    text-align: center;
+    border-radius: 20px;
+    max-width: 500px;
+    margin: auto;
+}
+
+.testimony > div {
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid var(--color-bg);
+}
+
+.testimony > div > div {
+    padding: 20px;
+    border-radius: 20px;
+    background: var(--color-bg);
+    padding-top: 47px;
+    position: relative;
+}
+
+.testimony > div > div p {
+    word-break: break-all;
+    max-height: 40px;
+    overflow: hidden;
+    padding-top: 15px;
+}
+
+.testimony .prophile {
+    top: -55px;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    width: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    aspect-ratio: 1/1;
+    margin: auto;
+    border: 2px solid var(--color-bg);
+}
+
+.testimony img {
+    width: 100%;
+    display: block;
+}
+
+.testimony .score {
+    display: flex;
+    justify-content: center;
+}
+
+.testimony .score img {
+    width: 23px;
+}
+
+#testimonies > div section {
+    text-align: center;
+}
+
+#testimonies > div section button {
+    padding: 15px;
+    transition: .3s;
+}
+
+#testimonies > div section button:hover {
+    transform: scale(1.1);
+}
+
+#testimonies > div section button span {
+    padding: 5px 7px;
+    background: var(--color-bg);
+    border-radius: 5px;
+    margin-left: 10px;
+}

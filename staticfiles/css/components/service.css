@@ -1,0 +1,59 @@
+#services > div > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: space-around;
+}
+
+#services > div > div > div {
+    flex: 1 200px;
+    transition: .4s;
+    border-radius: 5px;
+    overflow: hidden;
+    background: var(--color-main);
+    color: var(--color-bg);
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#services > div > div > div:hover {
+    transform: translateY(-5px); /* Eleva o card ao passar o mouse */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Aumenta a sombra no hover */
+}
+
+#services > div > div > div > div {
+    padding: 10px;
+}
+
+#services > div > div > div img {
+    width: 100%;
+}
+
+#services > div > div > div strong {
+    font-size: 18px;
+}
+
+#services > div > div > div p {
+    margin: 15px 0;
+}
+
+#services > div > div > div button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background: var(--color-second);
+    transition: .3s;
+}
+
+#services > div > div > div button:hover {
+    transform: scale(1.1);
+}
+
+@media screen and (max-width: 600px) {
+    #services > div > div > div {
+        max-width: none;
+    }
+}

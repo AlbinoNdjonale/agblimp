@@ -1,0 +1,23 @@
+.politic-privacit > div > div {
+    max-height: 85vh;
+    overflow-y: auto;
+    text-align: left;
+    overflow: scroll;
+    scrollbar-width: none;
+}
+
+.politic-privacit > div > div::-webkit-scrollbar {
+    display: none;
+}
+
+.politic-privacit > div h2, .politic-privacit > div h3 {
+    margin-bottom: 10px;
+}
+
+.politic-privacit > div section:not(:last-child) {
+    margin-bottom: 20px;
+}
+
+.politic-privacit > div p:not(:first-child) {
+    margin-bottom: 30px;
+}

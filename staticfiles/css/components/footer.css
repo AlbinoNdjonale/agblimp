@@ -1,0 +1,77 @@
+footer {
+    background: var(--color-mono);
+    color: #888;
+}
+
+footer h3 {
+    margin-bottom: 20px;
+    color: var(--color-bg);
+}
+
+footer li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+footer li img {
+    margin-right: 5px;
+}
+
+footer > div > div:first-child {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 70px 0;
+}
+
+footer > div > div > section {
+    max-width: 400px;
+}
+
+footer .about {
+    font-size: 1rem;
+}
+
+footer .time {
+    color: var(--color-bg);
+    font-weight: bold;
+}
+
+footer .time:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+footer .social {
+    margin-top: 15px;
+}
+
+footer .social a {
+    margin-right: 10px;
+}
+
+footer .social a img {
+    background: var(--color-main);
+    padding: 8px;
+    border-radius: 50%;
+    transition: .4s;
+}
+
+footer .social a img:hover {
+    transform: scale(1.1);
+}
+
+footer > div > div:last-child {
+    text-align: center;
+    padding: 20px 0;
+    border-top: 1px solid #888;
+}
+
+footer > div > div:last-child span {
+    color: var(--color-bg);
+}
+
+footer > div > div:last-child span:last-child {
+    cursor: pointer;
+}
