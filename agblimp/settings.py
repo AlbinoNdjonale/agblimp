@@ -208,9 +208,18 @@ if os.getenv('USE_S3') == 'true':
 
     DEFAULT_FILE_STORAGE = 'storages.backends.s3.S3Boto3Storage'
 
-ALLOWED_HOSTS = ['*']
-CORS_ALLOWED_ORIGINS = ['*']
-CSRF_TRUSTED_ORIGINS = ['*']
+ALLOWED_HOSTS = [
+    '*',
+    'https://agblimp-f95x94em.b4a.run'
+]
+CORS_ALLOWED_ORIGINS = [
+    '*',
+    'https://agblimp-f95x94em.b4a.run'
+]
+CSRF_TRUSTED_ORIGINS = [
+    '*',
+    'https://agblimp-f95x94em.b4a.run'
+]
 
 
 try:
