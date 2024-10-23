@@ -118,6 +118,198 @@ const checkcookie = () => {
 
 checkcookie()
 
+const constructdatetime = () => {
+    const months = [
+        'janeiro', 'fevereiero',
+        'março', 'abril', 'junho',
+        'julho', 'agosto', 'setembro',
+        'outubro', 'novembro', 'dezembro'
+    ]
+
+    const datetimes = document.querySelectorAll('.datetime')
+
+    datetimes.forEach(datetime => {
+        datetime.querySelector('input').setAttribute('readonly', '')
+        const calendary = document.createElement('div')
+        calendary.className = 'calendary'
+
+        const date = document.createElement('div')
+        date.className = 'date'
+
+        const header = document.createElement('div')
+        const headerleft = document.createElement('div')
+        const headerright = document.createElement('div')
+        header.appendChild(headerleft)
+        header.appendChild(headerright)
+        date.appendChild(header)
+
+        const main = document.createElement('div')
+        date.appendChild(main)
+
+        const footer = document.createElement('div')
+        footer.className = 'footer'
+        const button = document.createElement('button')
+        button.innerText = 'ok'
+        button.type = 'button'
+        footer.appendChild(button)
+
+        const divfast = document.createElement('div')
+
+        const today    = document.createElement('span')
+        today.innerText = 'hoje'
+        const tomorrow = document.createElement('span')
+        tomorrow.innerText = 'amanha'
+
+        divfast.appendChild(today)
+        divfast.appendChild(tomorrow)
+
+        footer.appendChild(divfast)
+
+        date.appendChild(footer)
+
+        calendary.appendChild(date)
+
+        const time = document.createElement('div')
+        time.className = 'time'
+
+        const hour = document.createElement('div')
+        const min  = document.createElement('div')
+        time.appendChild(hour)
+        time.appendChild(min)
+        calendary.appendChild(time)
+
+        button.addEventListener('click', () => {
+            datetime.querySelector('.calendary').style.display = 'none'
+            main.innerHTML = ''
+            hour.innerHTML = ''
+            min.innerHTML  = ''
+        })
+
+        datetime.appendChild(calendary)
+
+        const setDate = (clicked, active) => {
+            active.querySelector('.active').classList.remove('active')
+            clicked.classList.add('active')
+
+            const date = datetime.querySelector('.date > div:nth-child(2) .active')
+            const time = datetime.querySelectorAll('.time .active')
+
+            const value = `${date.getAttribute('data-year')}-${date.getAttribute('data-month')}-${date.getAttribute('data-day')}T${time[0].innerText}:${time[1].innerText}`
+
+            datetime.querySelector('input').value = value
+        }
+
+        datetime.querySelector('input').addEventListener('click', e => {
+            if (datetime.querySelector('.calendary').style.display == 'flex')
+                return
+
+            const blockeds = JSON.parse(datetime.getAttribute('blockeds'))??[]
+
+            const value = datetime.querySelector('input').value
+            
+            const today = new Date()
+            let selectday;
+            if (value == '') {
+                selectday  = new Date()
+            } else {
+                const date = value.split('T')[0].split('-')
+                const time = value.split('T')[1].split(':')
+                selectday  = new Date(date[0], date[1]-1, date[2], time[0], time[1])
+            }
+
+            const start  = new Date(selectday.getFullYear(), selectday.getMonth(), 1)
+        
+            start.setDate(-(start.getDay()-1))
+
+            datetime.querySelector('.calendary').style.display = 'flex'
+
+            datetime.querySelector('.date > div:nth-child(1) > div:nth-child(1)').innerText = `${months[selectday.getMonth()-1]} de ${selectday.getFullYear()}`  
+
+            const divday = datetime.querySelector('.date > div:nth-child(2)')
+            
+            for (const day of 'DSTQQSS'.split('')) {
+                const element = document.createElement('span')
+                element.innerText = day
+                divday.appendChild(element)
+            }
+
+            for (let day = 1; day < 43; day++) {
+                let date  = start.getDate()
+                const element = document.createElement('span')
+                element.setAttribute('data-year', start.getFullYear())
+                element.setAttribute('data-month', (start.getMonth()+1 <= 9?'0':'')+(start.getMonth()+1))
+                element.setAttribute('data-day', (start.getDate() <= 9?'0':'')+start.getDate())
+                
+                if (blockeds.includes(`${start.getFullYear()}-${start.getMonth()+1}-${start.getDate()}`)) {
+                    element.classList.add('blocked')
+                } else
+                    element.addEventListener('click', e => setDate(e.target, divday))
+    
+                if (start.getMonth() !== selectday.getMonth()) element.classList.add('out')
+                else if (date == selectday.getDate()) {
+                    element.classList.add('active')        
+                }
+
+                if (date == today.getDate() && start.getMonth() == today.getMonth())
+                    element.id = 'active'
+    
+                element.classList.add('date-item')
+    
+                element.innerText = date
+                divday.appendChild(element)
+                start.setDate(date + 1)
+            }
+
+            for (let hour = 0; hour < 24; hour++) {
+                const element = document.createElement('span')
+                if (hour == selectday.getHours()) element.classList.add('active')
+
+                element.addEventListener('click', e => setDate(e.target, datetime.querySelector('.time > div:nth-child(1)')))
+    
+                element.innerText = (hour <= 9?'0':'')+hour
+                datetime.querySelector('.time > div:nth-child(1)').appendChild(element)
+            }
+
+            for (let min = 0; min < 60; min++) {
+                const element = document.createElement('span')
+                if (min == selectday.getMinutes()) element.classList.add('active')
+
+                element.addEventListener('click', e => setDate(e.target, datetime.querySelector('.time > div:nth-child(2)')))
+    
+                element.innerText = (min <= 9?'0':'')+min
+                datetime.querySelector('.time > div:nth-child(2)').appendChild(element)
+            }
+        })
+
+    })
+}
+
+constructdatetime()
+
+const validatecep = async () => {
+    const form = document.getElementById('scheduling')
+
+    const cep = form.querySelector('#cep').value
+    const inputs = form.querySelectorAll('input, select, button')
+
+    if (cep.trim() == '') {
+        inputs.forEach(input => input.id=='cep'?'':input.setAttribute('disabled', ''))
+        form.querySelector('.err').style.display = 'block'
+    } else {
+        const cepvalid = await (await fetch(`validatecep/${cep}`)).json()
+
+        if (!cepvalid.valid) {
+            inputs.forEach(input => input.id=='cep'?'':input.setAttribute('disabled', ''))
+            form.querySelector('.err').style.display = 'block'
+        } else {
+            inputs.forEach(input => input.id=='cep'?'':input.removeAttribute('disabled'))
+            form.querySelector('.err').style.display = 'none'
+        }
+    }
+}
+
+validatecep()
+
 const swiperbanner = new Swiper('.swiper-banner', {
     loop: true,
     

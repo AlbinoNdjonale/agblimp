@@ -45,12 +45,18 @@ body > main .banner > div form {
     border: 2px solid var(--color-bg);
     padding: 40px;
     max-width: 500px;
+    transform: translateY(23px);
 }
 
 body > main .banner > div form > section:first-child p {
     text-align: center;
     font-weight: bold;
     font-size: 20px;
+}
+
+body > main .banner > div form .err {
+    font-weight: lighter;
+    color: orange;
 }
 
 body > main .banner > div form .input {

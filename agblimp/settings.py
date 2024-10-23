@@ -93,16 +93,24 @@ WSGI_APPLICATION = 'agblimp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE'  : 'django.db.backends.postgresql',
-        'NAME'    : os.getenv('DBNAME'),      # O nome do seu banco de dados
-        'USER'    : os.getenv('DBUSER'),      # O nome do seu usuário do banco de dados
-        'PASSWORD': os.getenv('DBPASSWORD'),  # A senha do seu usuário
-        'HOST'    : os.getenv('DBHOST'),        # Normalmente 'localhost'
-        'PORT'    : os.getenv('DBPORT'),             # A porta do PostgreSQL (5432 é a porta padrão)
+if os.getenv('USE_SQLITE') == 'true':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE'  : 'django.db.backends.postgresql',
+            'NAME'    : os.getenv('DBNAME'),      # O nome do seu banco de dados
+            'USER'    : os.getenv('DBUSER'),      # O nome do seu usuário do banco de dados
+            'PASSWORD': os.getenv('DBPASSWORD'),  # A senha do seu usuário
+            'HOST'    : os.getenv('DBHOST'),        # Normalmente 'localhost'
+            'PORT'    : os.getenv('DBPORT'),             # A porta do PostgreSQL (5432 é a porta padrão)
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

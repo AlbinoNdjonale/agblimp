@@ -1,5 +1,5 @@
 #workwithus {
-    background: white;
+    background: #ccc;
 }
 
 #workwithus > div > div {
@@ -59,7 +59,7 @@
 }
 
 #workwithus input, #workwithus .input {
-    background: #ddd;
+    background: #fff;
     border: 1px solid #223F59;
 }
 

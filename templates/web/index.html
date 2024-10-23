@@ -57,7 +57,7 @@
         {# section banner #}
         <section id = "home" class = "banner">
             <div class = "container">
-                <form action = {% url "web:scheduling" %} method = "post">
+                <form id = 'scheduling' action = {% url "web:scheduling" %} method = "post">
                     <section>
                         <p>Agendar serviço</p>
                     </section>
@@ -66,7 +66,8 @@
 
                     <section>
                         <label for = "cep">Cep</label>
-                        <input class = "input" required type = "text" name = "cep" id = "cep" value = "{{ client.cep|default:'' }}">
+                        <input oninput = "validatecep()" class = "input" required type = "text" name = "cep" id = "cep" value = "{{ client.cep|default:'' }}">
+                        <small><em class = "err">não atuamos nesta localidade</em></small>
                     </section>
 
                     <section>
@@ -100,7 +101,7 @@
 
                     <section class = "flex">
                         <section>
-                            <label for = "way_payment">Forma de pagamento</label>
+                            <label for = "way_payment">Pagamento</label>
                             <select class = "input" required name = "way_payment" id = "way_payment">
                                 <option></option>
                                 <option value = "cartão debito">Cartão debito</option>
@@ -122,13 +123,17 @@
     
                     <section>
                         <label for = "date">Data de agendamento</label>
-                        <input class = "input" required type = "datetime-local" name = "date" id = "date">
+                        <div class = "datetime" blockeds = '{{ dateblockeds }}'>
+                            <input class = "input" required type = "datetime-local" name = "date" id = "date">
+                        </div>
                     </section>
     
                     <section class = "flex">
                         <button class = "btn cta" type = "submit">AGENDAR SERVIÇO</button>
 
-                        <button class = "btn second" type= "button">ORÇAMENTO ONLINE</button>
+                        <a href = "https://wa.me/{{ generalinformation.whatsapp}}" target = "_blank">
+                            <button class = "btn second" type= "button">ORÇAMENTO ONLINE</button>
+                        </a>
                     </section>
                 </form>
             </div>
@@ -250,7 +255,7 @@
 
                 <!-- Botão CTA -->
                 <div class="faq-cta">
-                   <a href="">
+                    <a href = "https://wa.me/{{ generalinformation.whatsapp}}" target = "_blank">
                         <button class="cta-btn">
                             <div>
                                 <img src = "{% static 'img/whatsapp.svg' %}" alt = "imagem do whatsapp">
@@ -350,6 +355,55 @@
             </div>
         </section>
 
+        {# section about us #}
+        <section id = "about-us">
+            <div class = "container">
+                <h3 class = "title">Sobre nós</h3>
+
+                <section class = "about-top">
+                    <div>
+                        <p>{{ generalinformation.aboutus }}</p>
+
+                        <div class = "expirence">
+                            <span>{{ generalinformation.yearexpirence }}</span>
+                            <p>anos de experiência</p>
+                        </div>
+                    </div>
+
+                    <div class = "our">
+                        <div>
+                            <img src = "{% static 'img/mission.png' %}" alt = "imagem da nossa missão">
+                            <span>Nossa Visão</span>
+                            <p>{{ generalinformation.mission }}</p>
+                        </div>
+
+                        <div>
+                            <img src = "{% static 'img/vision.png' %}" alt = "imagem da nossa visão">
+                            <span>Nossa Missão</span>
+                            <p>{{ generalinformation.vision }}</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class = "about-bottom">
+                    <div>
+                        <span>+{{ generalinformation.clients }}</span>
+                        <span>Clientes</span>
+                    </div>
+
+                    <div>
+                        <span>+{{ generalinformation.projects }}</span>
+                        <span>Projectos</span>
+                    </div>
+
+                    <div>
+                        <span>+{{ generalinformation.professional }}</span>
+                        <span>Profissionais</span>
+                    </div>
+                </section>
+            </div>
+        </section>
+
         <section id = "banner-cookie">
             <div class="container">
                 <div>
@@ -365,7 +419,7 @@
             </div>
         </section>
 
-        <a href = "">
+        <a href = "https://wa.me/{{ generalinformation.whatsapp}}" target = "_blank">
             <div class = "whatsapp-button ">
                 <img src = "{% static 'img/whatsapp.svg' %}" alt = "imagem do whatsapp">
             </div>
@@ -385,7 +439,9 @@
                     <button class = "btn second">Agendar Serviço</button>
                 </a>
 
-                <button class = "btn cta">Orçamento online</button>
+                <a href = "https://wa.me/{{ generalinformation.whatsapp}}" target = "_blank">
+                    <button class = "btn cta">Orçamento online</button>
+                </a>
             </div>
         </div>
 
@@ -517,7 +573,7 @@
                             Se você tiver alguma dúvida ou preocupação
                             sobre nossa política de privacidade,
                             entre em contato conosco através do
-                            e-mail: seu-email@example.com
+                            e-mail: {{ generalinformation.email }}
                         </p>
                     </section>
                 </div>
@@ -573,16 +629,16 @@
                     <h3>Inormações de contacto</h3>
 
                     <ul>
-                        <li><img src = "{% static 'img/envelope.svg' %}" alt = "imagem de email">example@gmail.com</li>
-                        <li><img src = "{% static 'img/phone.svg' %}" alt = "imagem de telefone">+244 999999999</li>
+                        <li><img src = "{% static 'img/envelope.svg' %}" alt = "imagem de email">{{ generalinformation.email }}</li>
+                        <li><img src = "{% static 'img/phone.svg' %}" alt = "imagem de telefone">{{ generalinformation.phone }}</li>
                     </ul>
 
                     <div class = "social">
-                        <a href = "">
+                        <a href = "{{ generalinformation.facebook }}" target = "_blank">
                             <img src = "{% static 'img/facebook.svg' %}" alt = "imagem do facebook">
                         </a>
 
-                        <a href = "">
+                        <a href = "{{ generalinformation.instagram }}" target = "_blank">
                             <img src = "{% static 'img/instagram.svg' %}" alt = "imagem do instagram">
                         </a>
                     </div>

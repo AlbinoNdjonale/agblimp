@@ -6,5 +6,6 @@ app_name = 'web'
 urlpatterns = [
     path('', views.index, name = 'index'),
     path('scheduling', views.scheduling, name = 'scheduling'),
-    path('candidate', views.candidate, name = 'candidate')
+    path('candidate', views.candidate, name = 'candidate'),
+    path('validatecep/<cep>', views.validatecep, name = 'validatecep')
 ]

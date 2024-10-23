@@ -208,7 +208,7 @@ form {
     font-weight: bold;
 }
 
-form section {
+form section, form section div {
     display: grid;
     text-align: left;
 }
