@@ -5,7 +5,7 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-COPY pyproject.toml /app
+COPY requirements.txt /app
 
 RUN apk add --no-cache postgresql-dev gcc python3-dev musl-dev
 RUN pip install -r requirements.txt
