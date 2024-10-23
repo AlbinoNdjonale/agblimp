@@ -210,6 +210,8 @@ if os.getenv('USE_S3') == 'true':
 
 ALLOWED_HOSTS = ['*']
 CORS_ALLOWED_ORIGINS = ['*']
+CSRF_TRUSTED_ORIGINS = ['*']
+
 
 try:
     from agblimp.local_settings import *
