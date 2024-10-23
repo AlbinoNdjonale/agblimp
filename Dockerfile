@@ -1,4 +1,4 @@
-FROM python:3.12-alpine
+FROM python:3.12-slim
 
 WORKDIR /app
 
@@ -7,8 +7,15 @@ ENV PYTHONUNBUFFERED 1
 
 COPY requirements.txt /app
 
-RUN apk add --no-cache postgresql-dev gcc python3-dev musl-dev
-RUN pip install -r requirements.txt
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    gcc \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
 
 COPY . .
 
