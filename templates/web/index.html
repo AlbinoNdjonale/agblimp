@@ -10,7 +10,7 @@
     <title>Agblimp</title>
 </head>
 <body>
-    <header>
+    <header id = "header">
         <div class = "container">
             <div>
                 <div class = "flex">
@@ -31,6 +31,8 @@
                 </div>
 
                 {% include "web/components/menu.html" %}
+
+                <span style = "opacity: 0;">.</span>
             </div>
         </div>
     </header>
@@ -53,96 +55,113 @@
         <div class="swiper-pagination"></div>
     </div>
 
+    <div class = "mobile-banner"></div>
+
     <main>
         {# section banner #}
         <section id = "home" class = "banner">
             <div class = "container">
-                <form id = 'scheduling' action = {% url "web:scheduling" %} method = "post">
-                    <section>
-                        <p>Agendar serviço</p>
-                    </section>
+                <div>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur
+                        adipisicing elit. Exercitationem saepe
+                    </p>
+                    <p>
+                        voluptas reiciendis fuga molestiae,
+                        quia veniam doloribus enim deserunt
+                        minima natus mollitia blanditiis eum
+                        sunt fugit cumque, ab iste? Cum!
+                    </p>
 
-                    {% csrf_token %}
+                    <button class = "btn second" onclick = "document.querySelector('.wrapper-form-scheduling').style.display = 'flex'">AGENDAR SERVIÇO</button>
+                </div>
 
-                    <section>
-                        <label for = "cep">Cep</label>
-                        <input oninput = "validatecep()" class = "input" required type = "text" name = "cep" id = "cep" value = "{{ client.cep|default:'' }}">
-                        <small><em class = "err">não atuamos nesta localidade</em></small>
-                    </section>
-
-                    <section>
-                        <label for = "name">Nome</label>
-                        <input class = "input" required type = "text" name = "name" id = "name" value = "{{ client.name|default:'' }}">
-                    </section>
-
-                    <section class = "flex">
+                <div class="wrapper-form-scheduling">
+                    <form id = 'scheduling' action = {% url "web:scheduling" %} method = "post">
                         <section>
-                            <label for = "email">Email</label>
-                            <input class = "input" required type = "email" name = "email" id = "email" value = "{{ client.email|default:'' }}">
+                            <p>Agendar serviço</p>
                         </section>
 
+                        <button class = "close-btn" type = "button" onclick = "document.querySelector('.wrapper-form-scheduling').style.display = 'none'">&times;</button>
+    
+                        {% csrf_token %}
+    
                         <section>
-                            <label for = "phone">Telefone</label>
-                            <input class = "input" required type = "text" name = "phone" id = "phone" value = "{{ client.phone|default:'' }}">
+                            <label for = "cep">Cep</label>
+                            <input oninput = "validatecep()" class = "input" required type = "text" name = "cep" id = "cep" value = "{{ client.cep|default:'' }}">
+                            <small><em class = "err">não atuamos nesta localidade</em></small>
                         </section>
-                    </section>
-
-                    <section class = "flex">
+    
                         <section>
-                            <label for = "address">Endereço</label>
-                            <input class = "input" required type = "text" name = "address" id = "address" value = "{{ client.address|default:'' }}">
+                            <label for = "name">Nome</label>
+                            <input class = "input" required type = "text" name = "name" id = "name" value = "{{ client.name|default:'' }}">
+                        </section>
+    
+                        <section class = "flex">
+                            <section>
+                                <label for = "email">Email</label>
+                                <input class = "input" required type = "email" name = "email" id = "email" value = "{{ client.email|default:'' }}">
+                            </section>
+    
+                            <section>
+                                <label for = "phone">Telefone</label>
+                                <input class = "input" required type = "text" name = "phone" id = "phone" value = "{{ client.phone|default:'' }}">
+                            </section>
+                        </section>
+    
+                        <section class = "flex">
+                            <section>
+                                <label for = "address">Endereço</label>
+                                <input class = "input" required type = "text" name = "address" id = "address" value = "{{ client.address|default:'' }}">
+                            </section>
+            
+                            <section>
+                                <label for = "complemento">Complemento</label>
+                                <input class = "input" type = "text" name = "complemento" id = "complemento" value = "{{ client.complemento|default:'' }}">
+                            </section>
+                        </section>
+    
+                        <section class = "flex">
+                            <section>
+                                <label for = "way_payment">Pagamento</label>
+                                <select class = "input" required name = "way_payment" id = "way_payment">
+                                    <option></option>
+                                    <option value = "cartão debito">Cartão debito</option>
+                                    <option value = "cartão credito">Cartão credito</option>
+                                    <option value = "a vista">A vista</option>
+                                </select>
+                            </section>
+    
+                            <section>
+                                <label for = "service">Serviço</label>
+                                <select class = "input" required name = "service" id = "service">
+                                    <option></option>
+                                    {% for service in services %}
+                                        <option value = "{{ service.id }}"> {{ service.name }} </option>
+                                    {% endfor %}
+                                </select>
+                            </section>
                         </section>
         
                         <section>
-                            <label for = "complemento">Complemento</label>
-                            <input class = "input" type = "text" name = "complemento" id = "complemento" value = "{{ client.complemento|default:'' }}">
+                            <label for = "date">Data de agendamento</label>
+                            <div class = "datetime" blockeds = '{{ dateblockeds }}'>
+                                <input class = "input" required type = "datetime-local" name = "date" id = "date">
+                            </div>
                         </section>
-                    </section>
-
-                    <section class = "flex">
-                        <section>
-                            <label for = "way_payment">Pagamento</label>
-                            <select class = "input" required name = "way_payment" id = "way_payment">
-                                <option></option>
-                                <option value = "cartão debito">Cartão debito</option>
-                                <option value = "cartão credito">Cartão credito</option>
-                                <option value = "a vista">A vista</option>
-                            </select>
+        
+                        <section class = "flex">
+                            <button class = "btn cta" type = "submit">AGENDAR SERVIÇO</button>
                         </section>
-
-                        <section>
-                            <label for = "service">Serviço</label>
-                            <select class = "input" required name = "service" id = "service">
-                                <option></option>
-                                {% for service in services %}
-                                    <option value = "{{ service.id }}"> {{ service.name }} </option>
-                                {% endfor %}
-                            </select>
-                        </section>
-                    </section>
-    
-                    <section>
-                        <label for = "date">Data de agendamento</label>
-                        <div class = "datetime" blockeds = '{{ dateblockeds }}'>
-                            <input class = "input" required type = "datetime-local" name = "date" id = "date">
-                        </div>
-                    </section>
-    
-                    <section class = "flex">
-                        <button class = "btn cta" type = "submit">AGENDAR SERVIÇO</button>
-
-                        <a href = "https://wa.me/{{ generalinformation.whatsapp}}" target = "_blank">
-                            <button class = "btn second" type= "button">ORÇAMENTO ONLINE</button>
-                        </a>
-                    </section>
-                </form>
+                    </form>
+                </div>
             </div>
         </section>
 
         {# section services #}
         <section id = "services">
             <div class = "container">
-                <h2 class = "title">Nossos Serviços</h2>
+                <h2 class = "title">Nossos <span>Serviços</span></h2>
 
                 <div>
                     {% for service in services %}
@@ -171,10 +190,59 @@
             </div>
         </section>
 
+        {# section about us #}
+        <section id = "about-us">
+            <div class = "container">
+                <h2 class = "title">Sobre <span>Nós</span></h2>
+
+                <section class = "about-top">
+                    <div>
+                        <p>{{ generalinformation.aboutus }}</p>
+
+                        <div class = "expirence">
+                            <span>{{ generalinformation.yearexpirence }}</span>
+                            <p>anos de experiência</p>
+                        </div>
+                    </div>
+
+                    <div class = "our">
+                        <div>
+                            <img src = "{% static 'img/mission.png' %}" alt = "imagem da nossa missão">
+                            <span>Nossa Visão</span>
+                            <p>{{ generalinformation.mission }}</p>
+                        </div>
+
+                        <div>
+                            <img src = "{% static 'img/vision.png' %}" alt = "imagem da nossa visão">
+                            <span>Nossa Missão</span>
+                            <p>{{ generalinformation.vision }}</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class = "about-bottom">
+                    <div>
+                        <span data-count = '{{ generalinformation.clients }}'>+</span>
+                        <span>Clientes</span>
+                    </div>
+
+                    <div>
+                        <span data-count = '{{ generalinformation.projects }}'>+</span>
+                        <span>Projectos</span>
+                    </div>
+
+                    <div>
+                        <span data-count = '{{ generalinformation.professional }}'>+</span>
+                        <span>Profissionais</span>
+                    </div>
+                </section>
+            </div>
+        </section>
+
         {# section testimony #}
         <section id = "testimonies">
             <div class = "container">
-                <h2 class = "title">Histórias de sucesso com nossos serviços</h2>
+                <h2 class = "title">Históricos de sucesso com <span>nossos serviços</span></h2>
 
                 <div class = "swiper-container">
                     <div class = "swiper-wrapper">
@@ -217,12 +285,10 @@
                 </div>
 
                 <section>
-                    <a href = "#home">
-                        <button class = "btn second">
-                            solicite seu serviço agora
-                            <span class="icon">➔</span>
-                        </button>
-                    </a>
+                    <button class = "btn second" onclick = "document.querySelector('.wrapper-form-scheduling').style.display = 'flex'">
+                        solicite seu serviço agora
+                        <span class="icon">➔</span>
+                    </button>
                 </section>
             </div>
         </section>
@@ -231,7 +297,7 @@
         <section class = "faq-section" id = "faqs">
             <div class = "container">
                 <div class = "faq-header">
-                    <h2 class = "title">Como podemos ajudar você?</h2>
+                    <h2 class = "title">Como podemos <span>ajudar você?</span></h2>
                     <p class = "come">Encontre as respostas para as perguntas mais frequentes ou entre em contato conosco.</p>
                     
                     <!-- Barra de pesquisa -->
@@ -272,7 +338,7 @@
         {# section work with us #}
         <section id = "workwithus">
             <div class = "container">
-                <h3 class = "title">Venha fazer parte da nossa equipe</h3>
+                <h2 class = "title">Venha fazer parte da <span>nossa equipe</span></h2>
 
                 <p class = "come">
                     Estamos sempre em busca de pessoas apaixonadas,
@@ -355,73 +421,44 @@
             </div>
         </section>
 
-        {# section about us #}
-        <section id = "about-us">
-            <div class = "container">
-                <h3 class = "title">Sobre nós</h3>
-
-                <section class = "about-top">
-                    <div>
-                        <p>{{ generalinformation.aboutus }}</p>
-
-                        <div class = "expirence">
-                            <span>{{ generalinformation.yearexpirence }}</span>
-                            <p>anos de experiência</p>
-                        </div>
-                    </div>
-
-                    <div class = "our">
-                        <div>
-                            <img src = "{% static 'img/mission.png' %}" alt = "imagem da nossa missão">
-                            <span>Nossa Visão</span>
-                            <p>{{ generalinformation.mission }}</p>
-                        </div>
-
-                        <div>
-                            <img src = "{% static 'img/vision.png' %}" alt = "imagem da nossa visão">
-                            <span>Nossa Missão</span>
-                            <p>{{ generalinformation.vision }}</p>
-                        </div>
-                    </div>
-                </section>
-
-                <section class = "about-bottom">
-                    <div>
-                        <span>+{{ generalinformation.clients }}</span>
-                        <span>Clientes</span>
-                    </div>
-
-                    <div>
-                        <span>+{{ generalinformation.projects }}</span>
-                        <span>Projectos</span>
-                    </div>
-
-                    <div>
-                        <span>+{{ generalinformation.professional }}</span>
-                        <span>Profissionais</span>
-                    </div>
-                </section>
-            </div>
-        </section>
-
         <section id = "banner-cookie">
             <div class="container">
                 <div>
-                    <p>
-                        Este site utiliza cookies
-                        para melhorar sua experiência
-                        de navegação.
-                    </p>
+                    <div>
+                        <h3>Aviso de Cookies:</h3>
 
-                    <button onclick = "acceptcookie()" class = "btn second">Aceitar</button>
-                    <button onclick = "document.getElementById('banner-cookie').style.display = 'none'" class = "btn">Negar</button>
+                        <p>
+                            Quando você acessa este site,
+                            podem vir a ser coletados alguns
+                            dados relacionados ao seu
+                            dispositivo, bem como cookies,
+                            a fim de que possamos
+                            operacionalizar os nossos
+                            sistemas e fornecer conteúdos
+                            personalizados para você.
+                            Para saber mais sobre cookies
+                            acesse a nossa <span class = "link" onclick = "document.querySelector('.politic-privacit').style.display = 'flex'">Política de
+                            Privacidade</span>. Para aceitar,
+                            clique no botão "Aceitar Cookies",
+                            ou, caso não aceite, clique no botão
+                            "Recusar Cookies"
+                        </p>
+                    </div>
+
+                    <div>
+                        <button onclick = "acceptcookie()" class = "btn second">ACEITAR COOKIES</button>
+                        <button onclick = "document.getElementById('banner-cookie').style.display = 'none'" class = "btn">RECUSAR COOKIES</button>
+                    </div>
                 </div>
             </div>
         </section>
 
         <a href = "https://wa.me/{{ generalinformation.whatsapp}}" target = "_blank">
-            <div class = "whatsapp-button ">
-                <img src = "{% static 'img/whatsapp.svg' %}" alt = "imagem do whatsapp">
+            <div class = "whatsapp-button">
+                <span>agendar serviço</span>
+                <div>
+                    <img src = "{% static 'img/whatsapp.svg' %}" alt = "imagem do whatsapp">
+                </div>
             </div>
         </a>
 
@@ -434,10 +471,8 @@
                 <img src = "" alt = "" class = "popup-image">
                 
                 <p class = "popup-text"></p>
-                
-                <a href = "#home">
-                    <button class = "btn second">Agendar Serviço</button>
-                </a>
+
+                <button class = "btn second" onclick = "document.querySelector('.wrapper-form-scheduling').style.display = 'flex'">Agendar Serviço</button>
 
                 <a href = "https://wa.me/{{ generalinformation.whatsapp}}" target = "_blank">
                     <button class = "btn cta">Orçamento online</button>

@@ -310,6 +310,34 @@ const validatecep = async () => {
 
 validatecep()
 
+window.addEventListener("scroll", () => {
+    let header = document.getElementById("header")
+    header.classList.toggle('rolagem', window.scrollY > 0)
+})
+
+const countObserve = new IntersectionObserver(entries => {
+    entries.forEach(entrie => {
+        if (entrie.isIntersecting && !entrie.target.classList.contains("counted")) {
+            entrie.target.classList.add("counted")
+            
+            entrie.target.setAttribute('data-current', '0')
+
+            const increment = setInterval(() => {
+                if (entrie.target.getAttribute('data-current') == entrie.target.getAttribute('data-count'))
+                    clearInterval(increment)
+
+                entrie.target.innerText = '+'+entrie.target.getAttribute('data-current') 
+
+                entrie.target.setAttribute('data-current', parseInt(entrie.target.getAttribute('data-current'))+1)
+            }, 40)
+        }
+    })
+})
+
+const counts = document.querySelectorAll("[data-count]")
+
+counts.forEach(count => countObserve.observe(count))
+
 const swiperbanner = new Swiper('.swiper-banner', {
     loop: true,
     

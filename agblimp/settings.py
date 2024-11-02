@@ -213,11 +213,9 @@ ALLOWED_HOSTS = [
     'https://agblimp-f95x94em.b4a.run'
 ]
 CORS_ALLOWED_ORIGINS = [
-    '*',
     'https://agblimp-f95x94em.b4a.run'
 ]
 CSRF_TRUSTED_ORIGINS = [
-    '*',
     'https://agblimp-f95x94em.b4a.run'
 ]
 

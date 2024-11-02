@@ -1,10 +1,19 @@
 body > header {
-    background: var(--color-main);
     position: fixed;
     width: 100%;
     top: 0;
     left: 0;
     z-index: 40;
+    transition: 1s;
+}
+
+h1 {
+    color: var(--color-contrast);
+}
+
+body > header.rolagem {
+    background: var(--color-main);
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, .6);
 }
 
 body > header > div > div {
@@ -22,13 +31,20 @@ body > header nav li {
 body nav li a {
     padding: 7px;
     text-decoration: none;
-    color: var(--color-bg);
+    color: var(--color-contrast);
     transition: .6s;
     border-radius: 3px;
     font-size: 1.1em;
+    font-weight: bold;
 }
 
-body nav li a:hover {
+body > header.rolagem nav li a, body > header.rolagem h1 {
+    color: var(--color-bg);
+}
+
+body nav li a:hover,
+header.rolagem nav li a:hover,
+#menu-mobile a:hover {
     color: var(--color-main);
     background: var(--color-bg);
 }
@@ -64,6 +80,11 @@ body nav li a:hover {
 #menu-mobile li {
     list-style: none;
     display: grid;
+}
+
+#menu-mobile a {
+    color: var(--color-bg);
+    font-weight: normal;
 }
 
 .btn-toggle {
@@ -109,7 +130,7 @@ body > header .flex > *:not(:last-child) {
     margin-right: 7px;
 }
 
-@media screen and  (max-width: 888px) {
+@media screen and  (max-width: 990px) {
     body > header nav {
         display: none;
     }

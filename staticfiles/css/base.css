@@ -133,6 +133,9 @@ h1 {
     text-align: center;
     padding: 20px 0;
     margin-bottom: 15px;
+}
+
+.title span {
     color: var(--color-main);
 }
 
@@ -244,23 +247,40 @@ form section.flex section .input {
     bottom: 20px;
     right: 20px;
     background-color: #25D366;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    display: flex; 
-    justify-content: center;
+    border-radius: 2rem;
+    display: flex;
+    gap: 10px;
     align-items: center;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     z-index: 1000;
     transition: transform 0.3s ease;
     display: flex;
+    color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.whatsapp-button > div {
+    background-color: #25D366;
+    width: 32px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    display: flex; 
+    justify-content: center;
     align-items: center;
+    display: flex;
+    align-items: center;
+    border: 1px solid white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.2);
+    padding: 4px;
+}
+
+.whatsapp-button > span {
+    margin-left: 10px;
 }
 
 .whatsapp-button img {
-    width: 30px;
-    height: 30px;
+    width: 100%;
 }
 
 .whatsapp-button:hover {
