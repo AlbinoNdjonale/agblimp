@@ -1,0 +1,11 @@
+body > header {
+    background: var(--color-main);
+    color: var(--color-bg);
+}
+
+body > header > div > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 20px;
+}

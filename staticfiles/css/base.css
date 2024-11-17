@@ -5,6 +5,7 @@
     --color-fg: #222;
     --color-cta: #079167;
     --color-second: #f3c94d;
+    --color-contrast: darkblue;
 }
 
 * {
@@ -25,10 +26,6 @@ body {
 
 body > main > section:not(:first-child) {
     padding: 30px 0;
-}
-
-h1 {
-    color: var(--color-bg);
 }
 
 .container {
@@ -252,7 +249,7 @@ form section.flex section .input {
     gap: 10px;
     align-items: center;
     cursor: pointer;
-    z-index: 1000;
+    z-index: 39;
     transition: transform 0.3s ease;
     display: flex;
     color: white;

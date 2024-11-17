@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang = "pt-br">
+{% load static %}
+<head>
+    <meta charset = "UTF-8">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "{% static 'css/admin/style.css' %}">
+    <title>agblimp | admin | login</title>
+</head>
+<body id = "login">
+    <form action = "{% url 'admin:login' %}" method = "post">
+        {% csrf_token %}
+        <input id = 'next' type = "hidden" name = "next" value = "{% url 'admin:dashboard' %}">
+
+        <section>
+            <h1>Entrar</h1>
+        </section>
+
+        {% if form.errors %}
+            <section id = 'error'>
+                <em>
+                    <small>
+                        virifica se digitou corretamente seu username e password.
+                    </small>
+                </em>
+            </section>
+        {% endif %}
+
+        <section>
+            <label for = "username">Nome do usuário</label>
+            <input type = "text" id = "username" name = "username" required>
+        </section>
+
+        <section>
+            <label for = "password">Palavra passe</label>
+            <input type = "password" id = "password" name = "password" autocomplete = "current-password" required>
+        </section>
+
+        <section>
+            <button>Entrar</button>
+        </section>
+    </form>
+    <script lang = "javascript">
+        const url = decodeURI(document.documentURI)
+
+        const data = url.split('?')[1]
+
+        if (data) {
+            const start = data.indexOf('next=')
+
+            if (start >= 0) {
+
+                const end = data.indexOf(';')<0?data.length:data.indexOf(';')
+
+                const next = data.slice(start+5, end)
+
+                document.querySelector('#next').value = document.location.origin+next
+            }   
+        }
+    </script>
+</body>
+</html>

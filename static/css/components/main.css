@@ -1,4 +1,4 @@
-body > .swiper-banner, .mobile-banner {
+body > .desktop-banner, .mobile-banner {
     position: absolute;
     height: 100vh;
     width: 100%;
@@ -7,28 +7,45 @@ body > .swiper-banner, .mobile-banner {
     overflow: hidden;
 }
 
-body > .swiper-banner > div:not(:first-child) {
-    z-index: 31;
-}
-
 body > .mobile-banner {
-    z-index: 28;
     background: var(--color-main);
     display: none;
 }
 
-body > .swiper-banner .swiper-slide {
+body > .desktop-banner {
     background-size: cover;
     background-position: center;
-    height: 100%;
-}
-
-body > .swiper-banner .first {
     background-image: url('../../img/banner.jpg');
 }
 
-body > .swiper-banner .second {
-    background-image: url('../../img/banner1.jpg');
+.curve {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.curve div {
+    background: #eaeaea;
+}
+
+.se-world {
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: auto;
+}
+
+.se-world {
+    animation: fly 3s ease-in-out infinite;
+}
+
+.se-world img {
+    width: 40px;
 }
 
 body > main .banner {
@@ -46,23 +63,24 @@ body > main .banner > div {
 }
 
 body > main .banner > div > div:first-child p {
-    margin-bottom: 7px;
+    margin-bottom: 30px;
     max-width: 600px;
 }
 
 body > main .banner > div > div:first-child p:first-child {
     font-weight: bolder;
-    font-size: 23px;
+    font-size: 2.2rem;
     color: var(--color-second);
 }
 
 body > main .banner > div > div:first-child p {
-    color: var(--color-contrast);
+    color: var(--color-bg);
     font-weight: bold;
 }
 
 body > main .banner > div > div:first-child button {
     transition: .3s;
+    padding: 20px;
 }
 
 body > main .banner > div > div:first-child button:hover {
@@ -83,9 +101,8 @@ body > main .banner > div .wrapper-form-scheduling {
 }
 
 body > main .banner > div form {
-    background: #223F59;
+    background: #fff;
     color: var(--color-bg);
-    border: 2px solid var(--color-bg);
     padding: 40px;
     max-width: 500px;
     transform: translateY(23px);
@@ -96,6 +113,7 @@ body > main .banner > div form > section:first-child p {
     text-align: center;
     font-weight: bold;
     font-size: 20px;
+    color: var(--color-fg);
 }
 
 body > main .banner > div form .err {
@@ -104,22 +122,12 @@ body > main .banner > div form .err {
 }
 
 body > main .banner > div form .input {
-    background: var(--color-bg);
+    background: #ccc;
 }
 
 body > main .banner > div form section button {
     border-radius: 1rem;
     transition: .3s;
-}
-
-body > main .banner > div form section button.second:hover {
-    background: #c79707;
-}
-
-body > main .banner #intro p {
-    font-size: 3rem;
-    font-weight: bold;
-    color: var(--color-mono);
 }
 
 @media screen and (max-width: 991px) {
@@ -138,15 +146,25 @@ body > main .banner #intro p {
         display: block;
     }
 
+    body > .desktop-banner {
+        display: none;
+    }
+
     body > main .banner {
         text-align: center;
     }
+}
 
-    h1 {
-        color: var(--color-bg);
+@keyframes fly {
+    0% {
+        transform: translateY(0) translateX(-50%);
+    }
+    
+    50% {
+        transform: translateY(-7px) translateX(-50%);
     }
 
-    body > main .banner > div > div:first-child p {
-        color: var(--color-bg);
+    100% {
+        transform: translateY(0) translateX(-50%);
     }
 }

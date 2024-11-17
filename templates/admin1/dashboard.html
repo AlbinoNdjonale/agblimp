@@ -1,0 +1,88 @@
+{% extends "admin/base.html" %}
+
+{% block title %} dashboard {% endblock title %}
+
+{% block main %}
+    <div id = "dashboard">
+        <section class = "card summary-sales">
+            <h2>Resumo desta semana</h2>
+
+            <div>
+                <div>
+                    <strong>$R5k</strong>
+                    <small>Total de vendas</small>
+                </div>
+
+                <div>
+                    <strong>4</strong>
+                    <small>Total de agendamentos</small>
+                </div>
+
+                <div>
+                    <strong>2</strong>
+                    <small>Novos Clientes</small>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <canvas id = "satisfactionChart" width="400" height="200"></canvas>
+        </section>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const ctx = document.getElementById('satisfactionChart').getContext('2d');
+            const satisfactionChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    datasets: [{
+                        label: 'Nível de Satisfação',
+                        data: [2, 3, 1, 4, 3, 2, 4, 3, 1, 2, 4, 3], // Exemplo de níveis para cada mês
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4 // Suaviza a linha
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 4,
+                            stepSize: 1,
+                            title: {
+                                display: true,
+                                text: 'Nível de Satisfação'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    // Mapear os números para os níveis de satisfação
+                                    const levels = ['Muito Insatisfeito', 'Insatisfeito', 'Satisfeito', 'Muito Satisfeito'];
+                                    return levels[value - 1];
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Meses do Ano'
+                            }
+                        }
+                    },
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Satisfação dos Clientes ao Longo do Ano'
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+{% endblock main %}

@@ -223,19 +223,20 @@ class ServiceLocation(models.Model):
         return f'Local de atendimento {self.name}'
 
 class GeneralInformation(models.Model):
-    n_service_day = models.IntegerField(null = True)
-    email         = models.EmailField(max_length = 254, null = True, blank = True)
-    whatsapp      = models.CharField(max_length = 15, null = True, blank = True)
-    phone         = models.CharField(max_length = 15, null = True, blank = True)
-    facebook      = models.CharField(max_length = 150, null = True, blank = True)
-    instagram     = models.CharField(max_length = 150, null = True, blank = True)
-    aboutus       = models.TextField(null = True, blank = True)
-    mission       = models.TextField(null = True, blank = True)
-    vision        = models.TextField(null = True, blank = True)
-    yearexpirence = models.IntegerField(null = True)
-    clients       = models.IntegerField(null = True)
-    professional  = models.IntegerField(null = True)
-    projects      = models.IntegerField(null = True)
+    n_service_day       = models.IntegerField(null = True)
+    email               = models.EmailField(max_length = 254, null = True, blank = True)
+    whatsapp            = models.CharField(max_length = 15, null = True, blank = True)
+    phone               = models.CharField(max_length = 15, null = True, blank = True)
+    facebook            = models.CharField(max_length = 150, null = True, blank = True)
+    instagram           = models.CharField(max_length = 150, null = True, blank = True)
+    aboutus             = models.TextField(null = True, blank = True)
+    mission             = models.TextField(null = True, blank = True)
+    vision              = models.TextField(null = True, blank = True)
+    yearexpirence       = models.IntegerField(null = True)
+    clients             = models.IntegerField(null = True)
+    professional        = models.IntegerField(null = True)
+    affiliatedsocieties = models.IntegerField(null = True)
+    affiliated          = models.IntegerField(null = True)
 
     def __str__(self):
         return 'Informações gerais'

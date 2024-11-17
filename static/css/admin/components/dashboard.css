@@ -1,0 +1,13 @@
+#dashboard .summary-sales > div {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5px;
+}
+
+#dashboard .summary-sales > div > div {
+    display: grid;
+    padding: 7px;
+    background: var(--color-mono);
+    border-radius: 5px;
+    gap: 3px;
+}

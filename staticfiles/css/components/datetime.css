@@ -10,8 +10,8 @@
     font-weight: normal;
     cursor: default;
     box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, .5);
-    height: 310px;
-    top: -310px;
+    height: 320px;
+    top: -320px;
     display: none;
 }
 
@@ -26,7 +26,18 @@
 
 .datetime > div.calendary .date > div:nth-child(1) {
     display: flex;
+    justify-content: space-between;
+    align-items: start;
     margin-bottom: 10px;
+}
+
+.datetime > div.calendary .date > div:nth-child(1) > div:nth-child(2) {
+    display: flex;
+}
+
+.datetime > div.calendary .date > div:nth-child(1) > div:nth-child(2) button {
+    border: none;
+    background: transparent;
 }
 
 .datetime > div.calendary .date > div:nth-child(2) {

@@ -7,6 +7,10 @@ body > header {
     transition: 1s;
 }
 
+h1 {
+    color: var(--color-bg);
+}
+
 body > header.rolagem {
     background: var(--color-main);
     box-shadow: 1px 1px 3px rgba(0, 0, 0, .6);
@@ -33,7 +37,9 @@ body nav li a {
     font-size: 1.1em;
 }
 
-body nav li a:hover {
+body nav li a:hover,
+header.rolagem nav li a:hover,
+#menu-mobile a:hover {
     color: var(--color-main);
     background: var(--color-bg);
 }
@@ -71,13 +77,18 @@ body nav li a:hover {
     display: grid;
 }
 
+#menu-mobile a {
+    color: var(--color-bg);
+    font-weight: normal;
+}
+
 .btn-toggle {
     width: 37px;
     aspect-ratio: 1/1;
     border: none;
     cursor: pointer;
     border-radius: 5px;
-    background: var(--color-main);
+    background: transparent;
     border: 2px solid var(--color-bg);
     display: none;
     padding: 5px;
@@ -114,7 +125,7 @@ body > header .flex > *:not(:last-child) {
     margin-right: 7px;
 }
 
-@media screen and  (max-width: 929px) {
+@media screen and (max-width: 990px) {
     body > header nav {
         display: none;
     }

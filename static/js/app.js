@@ -131,6 +131,17 @@ const constructdatetime = () => {
     datetimes.forEach(datetime => {
         const blockeds  = JSON.parse(datetime.getAttribute('blockeds'))??[]
         const functions = []
+
+        if (datetime.querySelector('input').required) {
+            const err       = document.createElement('em')
+            const small     = document.createElement('small')
+            small.innerText = 'preencha este campo'
+            err.appendChild(small)
+            err.className = 'err'
+            err.style.display = 'none'
+
+            datetime.appendChild(err)
+        }
         
         datetime.querySelector('input').setAttribute('readonly', '')
         const calendary = document.createElement('div')
@@ -406,13 +417,27 @@ const constructdatetime = () => {
     })
 }
 
+const submit = (event) => {
+    event.preventDefault()
+
+    const datetime = event.target.querySelector('.datetime')
+
+    if (datetime.querySelector('.input').value == '') {
+        datetime.querySelector('.err').style.display = 'block'
+    } else {
+        event.target.submit()
+    }
+}
+
+document.getElementById('scheduling').addEventListener('submit', submit)
+
 constructdatetime()
 
 const validatecep = async () => {
     const form = document.getElementById('scheduling')
 
     const cep = form.querySelector('#cep').value
-    const inputs = form.querySelectorAll('input, select, button')
+    const inputs = form.querySelectorAll(`input, select, button[type='submit']`)
 
     if (cep.trim() == '') {
         inputs.forEach(input => input.id=='cep'?'':input.setAttribute('disabled', ''))
@@ -451,7 +476,7 @@ const countObserve = new IntersectionObserver(entries => {
                 entrie.target.innerText = '+'+entrie.target.getAttribute('data-current') 
 
                 entrie.target.setAttribute('data-current', parseInt(entrie.target.getAttribute('data-current'))+1)
-            }, 40)
+            }, 7)
         }
     })
 })

@@ -3,21 +3,46 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    text-align: center;
     z-index: 40;
     display: none;
+    border-top: 1px solid var(--color-bg);
 }
 
-#banner-cookie div div {
-    padding: 20px 0;
-}
-
-#banner-cookie div div p {
+#banner-cookie h3 {
+    font-size: 1rem;
     color: var(--color-bg);
-    font-weight: bold;
-    margin-bottom: 10px;
 }
 
-#banner-cookie div div button {
+#banner-cookie .link {
+    text-decoration: underline;
+    color: rgb(29, 4, 53);
+    cursor: pointer;
+}
+
+#banner-cookie > div > div {
+    display: grid;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+#banner-cookie > div > div > * {
+    flex: 1;
+}
+
+#banner-cookie > div > div p {
+    color: var(--color-bg);
+    margin-bottom: 10px;
+    font-size: .9rem;
+}
+
+#banner-cookie > div > div button {
     padding: 14px 16px;
+}
+
+@media screen and (min-width: 900px) {
+    #banner-cookie > div > div {
+        grid-template-columns: 1fr 340px;
+    }
 }

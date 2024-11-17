@@ -25,7 +25,6 @@
                     </button>
 
                     <a href = "#home" class = "flex" id = "logo">
-                        <img src = "{% static 'img/logo.webp' %}" alt = "logo">
                         <h1>Agblimp</h1>
                     </a>
                 </div>
@@ -44,18 +43,17 @@
         {% include "web/components/menu.html" %}
     </div>
 
-    <div class = "swiper-banner">
-        <div class = "swiper-wrapper">
-            <div class = "swiper-slide first"></div>
-            <div class = "swiper-slide second"></div>
-        </div>
-
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-pagination"></div>
-    </div>
+    <div class = "desktop-banner"></div>
 
     <div class = "mobile-banner"></div>
+
+    <div class = "curve">
+        <div></div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 376 53" fill="none" style = "transform: scale(1.01); min-width: 260px;">
+            <path fill="#eaeaea" fill-rule="evenodd" clip-rule="evenodd" d="M96.1076 22.0154L48.0538 22.0154L0 22.0154V0.0906042C0 0.0906042 15.5283 -1.12747 45.3259 5.36878C75.1234 11.865 96.1076 22.0154 96.1076 22.0154ZM376 22.0154L279.892 22.0154C279.892 22.0154 300.877 11.865 330.674 5.36878C360.472 -1.12747 376 0.0906042 376 0.0906042V22.0154ZM145.62 46.1592C130.515 39.7209 96.1076 22.0154 96.1076 22.0154L48.0538 22.0154L0 22.0154V53H188H376V22.0154L279.892 22.0154C279.892 22.0154 245.485 39.7209 230.38 46.1592C215.274 52.5976 188 53 188 53C188 53 160.726 52.5976 145.62 46.1592Z"/>
+        </svg>
+        <div></div>
+    </div>
 
     <main>
         {# section banner #}
@@ -87,45 +85,38 @@
                         {% csrf_token %}
     
                         <section>
-                            <label for = "cep">Cep</label>
-                            <input oninput = "validatecep()" class = "input" required type = "text" name = "cep" id = "cep" value = "{{ client.cep|default:'' }}">
+                            <input placeholder = "cep" oninput = "validatecep()" id = "cep" class = "input" required type = "text" name = "cep" value = "{{ client.cep|default:'' }}" maxlength = "9">
                             <small><em class = "err">não atuamos nesta localidade</em></small>
                         </section>
     
                         <section>
-                            <label for = "name">Nome</label>
-                            <input class = "input" required type = "text" name = "name" id = "name" value = "{{ client.name|default:'' }}">
+                            <input placeholder = 'Nome' class = "input" required type = "text" name = "name" value = "{{ client.name|default:'' }}">
                         </section>
     
                         <section class = "flex">
                             <section>
-                                <label for = "email">Email</label>
-                                <input class = "input" required type = "email" name = "email" id = "email" value = "{{ client.email|default:'' }}">
+                                <input placeholder = 'email' class = "input" required type = "email" name = "email" value = "{{ client.email|default:'' }}">
                             </section>
     
                             <section>
-                                <label for = "phone">Telefone</label>
-                                <input class = "input" required type = "text" name = "phone" id = "phone" value = "{{ client.phone|default:'' }}">
+                                <input placeholder = 'Telefone' class = "input" required type = "text" name = "phone" value = "{{ client.phone|default:'' }}">
                             </section>
                         </section>
     
                         <section class = "flex">
                             <section>
-                                <label for = "address">Endereço</label>
-                                <input class = "input" required type = "text" name = "address" id = "address" value = "{{ client.address|default:'' }}">
+                                <input placeholder = 'Endereço' class = "input" required type = "text" name = "address" value = "{{ client.address|default:'' }}">
                             </section>
             
                             <section>
-                                <label for = "complemento">Complemento</label>
-                                <input class = "input" type = "text" name = "complemento" id = "complemento" value = "{{ client.complemento|default:'' }}">
+                                <input placeholder = 'Complemento' class = "input" type = "text" name = "complemento" value = "{{ client.complemento|default:'' }}">
                             </section>
                         </section>
     
                         <section class = "flex">
                             <section>
-                                <label for = "way_payment">Pagamento</label>
-                                <select class = "input" required name = "way_payment" id = "way_payment">
-                                    <option></option>
+                                <select class = "input" required name = "way_payment">
+                                    <option value = "">Metodo de pagamento</option>
                                     <option value = "cartão debito">Cartão debito</option>
                                     <option value = "cartão credito">Cartão credito</option>
                                     <option value = "a vista">A vista</option>
@@ -133,9 +124,8 @@
                             </section>
     
                             <section>
-                                <label for = "service">Serviço</label>
-                                <select class = "input" required name = "service" id = "service">
-                                    <option></option>
+                                <select class = "input" required name = "service" id = 'service'>
+                                    <option value = "">Serviço</option>
                                     {% for service in services %}
                                         <option value = "{{ service.id }}"> {{ service.name }} </option>
                                     {% endfor %}
@@ -144,9 +134,8 @@
                         </section>
         
                         <section>
-                            <label for = "date">Data de agendamento</label>
                             <div class = "datetime" blockeds = '{{ dateblockeds }}'>
-                                <input class = "input" required type = "datetime-local" name = "date" id = "date">
+                                <input placeholder = 'Data de agendamento' class = "input" required type = "datetime-local" name = "date">
                             </div>
                         </section>
         
@@ -156,6 +145,10 @@
                     </form>
                 </div>
             </div>
+
+            <a href = "#services" class = "se-world">
+                <img src = "{% static 'img/to-down.svg' %}" alt = "imagem de uma seta pra baixo">
+            </a>
         </section>
 
         {# section services #}
@@ -227,13 +220,18 @@
                     </div>
 
                     <div>
-                        <span data-count = '{{ generalinformation.projects }}'>+</span>
-                        <span>Projectos</span>
+                        <span data-count = '{{ generalinformation.affiliatedsocieties }}'>+</span>
+                        <span>Filiais</span>
                     </div>
 
                     <div>
                         <span data-count = '{{ generalinformation.professional }}'>+</span>
                         <span>Profissionais</span>
+                    </div>
+
+                    <div>
+                        <span data-count = '{{ generalinformation.affiliated }}'>+</span>
+                        <span>Afiliados</span>
                     </div>
                 </section>
             </div>
@@ -242,7 +240,7 @@
         {# section testimony #}
         <section id = "testimonies">
             <div class = "container">
-                <h2 class = "title">Históricos de sucesso com <span>nossos serviços</span></h2>
+                <h2 class = "title">Depoimentos</h2>
 
                 <div class = "swiper-container">
                     <div class = "swiper-wrapper">
@@ -404,7 +402,7 @@
 
                             <section>
                                 <label for = "curriculum_vitae">Curriculum vitae (opcional)</label>
-                                <input class = "input" type = "file" id = "curriculum_vitae" name = "curriculum_vitae">
+                                <input class = "input" type = "file" id = "curriculum_vitae" name = "curriculum_vitae" accept = ".pdf, .doc, .docx">
                             </section>
 
                             <section>
@@ -455,7 +453,7 @@
 
         <a href = "https://wa.me/{{ generalinformation.whatsapp}}" target = "_blank">
             <div class = "whatsapp-button">
-                <span>agendar serviço</span>
+                <span>orçamento online</span>
                 <div>
                     <img src = "{% static 'img/whatsapp.svg' %}" alt = "imagem do whatsapp">
                 </div>

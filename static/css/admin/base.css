@@ -1,0 +1,33 @@
+:root {
+    --color-main: #086dac;
+    --color-mono: #004774;
+    --color-bg: #eaeaea;
+    --color-fg: #222;
+    --color-cta: #079167;
+    --color-second: #f3c94d;
+    --color-contrast: darkblue;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.card {
+    background: var(--color-main);
+    padding: 10px;
+    border-radius: 5px;
+    color: var(--color-bg);
+}
+
+.card > h2 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}

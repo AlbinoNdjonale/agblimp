@@ -121,7 +121,7 @@ checkcookie()
 const constructdatetime = () => {
     const months = [
         'janeiro', 'fevereiero',
-        'março', 'abril', 'junho',
+        'março', 'abril', 'maio', 'junho',
         'julho', 'agosto', 'setembro',
         'outubro', 'novembro', 'dezembro'
     ]
@@ -129,6 +129,20 @@ const constructdatetime = () => {
     const datetimes = document.querySelectorAll('.datetime')
 
     datetimes.forEach(datetime => {
+        const blockeds  = JSON.parse(datetime.getAttribute('blockeds'))??[]
+        const functions = []
+
+        if (datetime.querySelector('input').required) {
+            const err       = document.createElement('em')
+            const small     = document.createElement('small')
+            small.innerText = 'preencha este campo'
+            err.appendChild(small)
+            err.className = 'err'
+            err.style.display = 'none'
+
+            datetime.appendChild(err)
+        }
+        
         datetime.querySelector('input').setAttribute('readonly', '')
         const calendary = document.createElement('div')
         calendary.className = 'calendary'
@@ -139,6 +153,24 @@ const constructdatetime = () => {
         const header = document.createElement('div')
         const headerleft = document.createElement('div')
         const headerright = document.createElement('div')
+
+        const btnup   = document.createElement('button')
+        btnup.type    = 'button'
+        const imgup   = document.createElement('img')
+        imgup.src     = '/static/img/up.svg'
+        btnup.appendChild(imgup)
+        btnup.addEventListener('click', e => setDate(btnup))
+
+        const btndown   = document.createElement('button')
+        btndown.type    = 'button'
+        const imgdown   = document.createElement('img')
+        imgdown.src     = '/static/img/down.svg'
+        btndown.appendChild(imgdown)
+        btndown.addEventListener('click', e => setDate(btndown))
+
+        headerright.appendChild(btnup)
+        headerright.appendChild(btndown)
+
         header.appendChild(headerleft)
         header.appendChild(headerright)
         date.appendChild(header)
@@ -154,11 +186,25 @@ const constructdatetime = () => {
         footer.appendChild(button)
 
         const divfast = document.createElement('div')
+        
+        const todaydate = new Date()
 
-        const today    = document.createElement('span')
+        const today     = document.createElement('span')
         today.innerText = 'hoje'
-        const tomorrow = document.createElement('span')
+        today.setAttribute('data-year', todaydate.getFullYear())
+        today.setAttribute('data-month', (todaydate.getMonth()+1 <= 9?'0':'')+(todaydate.getMonth()+1))
+        today.setAttribute('data-day', (todaydate.getDate() <= 9?'0':'')+todaydate.getDate())
+        if (!blockeds.includes(`${todaydate.getFullYear()}-${todaydate.getMonth()+1}-${todaydate.getDate()}`))
+            today.addEventListener('click', e => setDate(e.target))
+
+        todaydate.setDate(todaydate.getDate()+1)
+        const tomorrow  = document.createElement('span')
         tomorrow.innerText = 'amanha'
+        tomorrow.setAttribute('data-year', todaydate.getFullYear())
+        tomorrow.setAttribute('data-month', (todaydate.getMonth()+1 <= 9?'0':'')+(todaydate.getMonth()+1))
+        tomorrow.setAttribute('data-day', (todaydate.getDate() <= 9?'0':'')+todaydate.getDate())
+        if (!blockeds.includes(`${todaydate.getFullYear()}-${todaydate.getMonth()+1}-${todaydate.getDate()}`))
+            tomorrow.addEventListener('click', e => setDate(e.target))
 
         divfast.appendChild(today)
         divfast.appendChild(tomorrow)
@@ -187,43 +233,117 @@ const constructdatetime = () => {
 
         datetime.appendChild(calendary)
 
-        const setDate = (clicked, active) => {
-            active.querySelector('.active').classList.remove('active')
-            clicked.classList.add('active')
+        const setDate = (clicked) => {
+            const active = datetime.querySelector('.date > div:nth-child(2)')
+
+            if (active.querySelector('.active')) {
+                active.querySelector('.active').classList.remove('active')   
+            }
+
+            if (datetime.querySelector('.calendary').getAttribute('data-month-year') != clicked.getAttribute('data-month')+'-'+clicked.getAttribute('data-year')) {
+                const year   = parseInt(clicked.getAttribute('data-year'))
+                const month  = parseInt(clicked.getAttribute('data-month'))
+                const day1   = parseInt(clicked.getAttribute('data-day'))
+
+                const today      = new Date()
+                const selectday  = new Date(year, month-1, day1)
+                const selectday1 = new Date(year, month-1, day1)
+                const start      = new Date(selectday.getFullYear(), selectday.getMonth(), 1)
+                start.setDate(-(start.getDay()-1))
+                
+                datetime.querySelector('.date > div:nth-child(1) > div:nth-child(1)').innerText = `${months[parseInt(clicked.getAttribute('data-month'))-1]} de ${clicked.getAttribute('data-year')}`
+                datetime.querySelector('.calendary').setAttribute('data-month-year', `${clicked.getAttribute('data-month')}-${clicked.getAttribute('data-year')}`)
+
+                const divday = datetime.querySelector('.date > div:nth-child(2)')
+
+                selectday1.setMonth(selectday1.getMonth()-1)
+                btnup.setAttribute('data-year', selectday1.getFullYear())
+                btnup.setAttribute('data-month', (selectday1.getMonth()+1 <= 9?'0':'')+(selectday1.getMonth()+1))
+                btnup.setAttribute('data-day', (selectday1.getDate() <= 9?'0':'')+selectday1.getDate())
+
+                selectday1.setMonth(selectday1.getMonth()+2)
+                btndown.setAttribute('data-year', selectday1.getFullYear())
+                btndown.setAttribute('data-month', (selectday1.getMonth()+1 <= 9?'0':'')+(selectday1.getMonth()+1))
+                btndown.setAttribute('data-day', (selectday1.getDate() <= 9?'0':'')+selectday1.getDate())
+                
+                for (let day = 0; day < 42; day++) {
+                    let date      = start.getDate()
+                    const element = divday.children[day+7];
+                    
+                    element.setAttribute('data-year', start.getFullYear())
+                    element.setAttribute('data-month', (start.getMonth()+1 <= 9?'0':'')+(start.getMonth()+1))
+                    element.setAttribute('data-day', (start.getDate() <= 9?'0':'')+start.getDate())
+                    
+                    if (functions[day])
+                        element.removeEventListener('click', functions[day])
+
+                    if (blockeds.includes(`${start.getFullYear()}-${start.getMonth()+1}-${start.getDate()}`)) {
+                        element.classList.add('blocked')
+                        functions[day] = null
+                    } else {
+                        functions[day] = e => setDate(e.target)
+                        element.addEventListener('click', functions[day])
+                        element.classList.remove('blocked')
+                    }
+
+                    if (start.getMonth() !== selectday.getMonth()) element.classList.add('out')
+                    else {
+                        if (date == selectday.getDate()) {
+                            element.classList.add('active')
+                        }
+                        element.classList.remove('out')
+                    }
+
+                    if (date == today.getDate() && start.getMonth() == today.getMonth() && start.getFullYear() == today.getFullYear())
+                        element.id = 'active'
+                    else
+                        element.id = null
+
+                    element.innerText = date
+                    start.setDate(date + 1)
+                }
+            } else
+                active.querySelector(`[data-month='${clicked.getAttribute('data-month')}'][data-day='${clicked.getAttribute('data-day')}']`).classList.add('active')
 
             const date = datetime.querySelector('.date > div:nth-child(2) .active')
-            const time = datetime.querySelectorAll('.time .active')
+            
+            if (date) {
+                const time = datetime.querySelectorAll('.time .active')
 
-            const value = `${date.getAttribute('data-year')}-${date.getAttribute('data-month')}-${date.getAttribute('data-day')}T${time[0].innerText}:${time[1].innerText}`
+                const value = `${date.getAttribute('data-year')}-${date.getAttribute('data-month')}-${date.getAttribute('data-day')}T${time[0].innerText}:${time[1].innerText}`
 
-            datetime.querySelector('input').value = value
+                datetime.querySelector('input').value = value   
+            }
         }
 
         datetime.querySelector('input').addEventListener('click', e => {
             if (datetime.querySelector('.calendary').style.display == 'flex')
                 return
 
-            const blockeds = JSON.parse(datetime.getAttribute('blockeds'))??[]
-
             const value = datetime.querySelector('input').value
             
             const today = new Date()
             let selectday;
+            let selectday1;
             if (value == '') {
-                selectday  = new Date()
+                selectday   = new Date()
+                selectday1  = new Date()
             } else {
-                const date = value.split('T')[0].split('-')
-                const time = value.split('T')[1].split(':')
-                selectday  = new Date(date[0], date[1]-1, date[2], time[0], time[1])
+                const date  = value.split('T')[0].split('-')
+                const time  = value.split('T')[1].split(':')
+                selectday   = new Date(date[0], date[1]-1, date[2], time[0], time[1])
+                selectday1  = new Date(date[0], date[1]-1, date[2], time[0], time[1])
             }
 
             const start  = new Date(selectday.getFullYear(), selectday.getMonth(), 1)
+
+            datetime.querySelector('.calendary').setAttribute('data-month-year', `${(selectday.getMonth()+1 <= 9?'0':'')+(selectday.getMonth()+1)}-${selectday.getFullYear()}`)
         
             start.setDate(-(start.getDay()-1))
 
             datetime.querySelector('.calendary').style.display = 'flex'
 
-            datetime.querySelector('.date > div:nth-child(1) > div:nth-child(1)').innerText = `${months[selectday.getMonth()-1]} de ${selectday.getFullYear()}`  
+            datetime.querySelector('.date > div:nth-child(1) > div:nth-child(1)').innerText = `${months[selectday.getMonth()]} de ${selectday.getFullYear()}`  
 
             const divday = datetime.querySelector('.date > div:nth-child(2)')
             
@@ -233,7 +353,17 @@ const constructdatetime = () => {
                 divday.appendChild(element)
             }
 
-            for (let day = 1; day < 43; day++) {
+            selectday1.setMonth(selectday1.getMonth()-1)
+            btnup.setAttribute('data-year', selectday1.getFullYear())
+            btnup.setAttribute('data-month', (selectday1.getMonth()+1 <= 9?'0':'')+(selectday1.getMonth()+1))
+            btnup.setAttribute('data-day', (selectday1.getDate() <= 9?'0':'')+selectday1.getDate())
+
+            selectday1.setMonth(selectday1.getMonth()+2)
+            btndown.setAttribute('data-year', selectday1.getFullYear())
+            btndown.setAttribute('data-month', (selectday1.getMonth()+1 <= 9?'0':'')+(selectday1.getMonth()+1))
+            btndown.setAttribute('data-day', (selectday1.getDate() <= 9?'0':'')+selectday1.getDate())
+
+            for (let day = 0; day < 42; day++) {
                 let date  = start.getDate()
                 const element = document.createElement('span')
                 element.setAttribute('data-year', start.getFullYear())
@@ -242,15 +372,18 @@ const constructdatetime = () => {
                 
                 if (blockeds.includes(`${start.getFullYear()}-${start.getMonth()+1}-${start.getDate()}`)) {
                     element.classList.add('blocked')
-                } else
-                    element.addEventListener('click', e => setDate(e.target, divday))
+                    functions.push(null)
+                } else {
+                    functions.push(e => setDate(e.target))
+                    element.addEventListener('click', functions[day])
+                }
     
                 if (start.getMonth() !== selectday.getMonth()) element.classList.add('out')
                 else if (date == selectday.getDate()) {
                     element.classList.add('active')        
                 }
 
-                if (date == today.getDate() && start.getMonth() == today.getMonth())
+                if (date == today.getDate() && start.getMonth() == today.getMonth() && start.getFullYear() == today.getFullYear())
                     element.id = 'active'
     
                 element.classList.add('date-item')
@@ -284,13 +417,27 @@ const constructdatetime = () => {
     })
 }
 
+const submit = (event) => {
+    event.preventDefault()
+
+    const datetime = event.target.querySelector('.datetime')
+
+    if (datetime.querySelector('.input').value == '') {
+        datetime.querySelector('.err').style.display = 'block'
+    } else {
+        event.target.submit()
+    }
+}
+
+document.getElementById('scheduling').addEventListener('submit', submit)
+
 constructdatetime()
 
 const validatecep = async () => {
     const form = document.getElementById('scheduling')
 
     const cep = form.querySelector('#cep').value
-    const inputs = form.querySelectorAll('input, select, button')
+    const inputs = form.querySelectorAll(`input, select, button[type='submit']`)
 
     if (cep.trim() == '') {
         inputs.forEach(input => input.id=='cep'?'':input.setAttribute('disabled', ''))
@@ -329,7 +476,7 @@ const countObserve = new IntersectionObserver(entries => {
                 entrie.target.innerText = '+'+entrie.target.getAttribute('data-current') 
 
                 entrie.target.setAttribute('data-current', parseInt(entrie.target.getAttribute('data-current'))+1)
-            }, 40)
+            }, 7)
         }
     })
 })

@@ -9,22 +9,24 @@ import json
 
 # Create your views here.
 
-def generateceps():
-    localservices = models.ServiceLocation.objects.all()
+def inceps(cep: str):
+    cep = cep.replace('-', '')
 
-    ceps = []
+    if not cep.isnumeric(): return False
+
+    cep = int(cep)
+
+    localservices = models.ServiceLocation.objects.all()
 
     for localservice in localservices:
         if localservice.active:
             cep_min = int(localservice.min_cep.replace('-', ''))
             cep_max = int(localservice.max_cep.replace('-', ''))
 
-            for cep in range(cep_min, cep_max + 1):
-                cep_str = str(cep).zfill(8)
-                cep_formatado = f"{cep_str[:5]}-{cep_str[5:]}"
-                ceps.append(cep_formatado)
+            if cep >= cep_min and cep <= cep_max:
+                return True
     
-    return ceps
+    return False
 
 def dateblockeds():
     schedulings  = models.Scheduling.objects.all()
@@ -165,4 +167,4 @@ def candidate(request: HttpRequest):
     return HttpResponseRedirect(f'{reverse("web:index")}?{urlencode(query_params)}')
 
 def validatecep(request: HttpRequest, cep):
-    return JsonResponse({'valid': cep in generateceps()})
+    return JsonResponse({'valid': inceps(cep)})

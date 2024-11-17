@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang = "pt-br">
+{% load static %}
+<head>
+    <meta charset = "UTF-8">
+    <meta name = "viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "{% static 'css/admin/style.css' %}">
+    <title>agblimp | admin | {% block title %}{% endblock title %}</title>
+</head>
+<body>
+    <header>
+        <div class = 'container'>
+            <div>
+                <h1>Agblimp</h1>
+
+                <a href = "{% url 'web:index' %}">Ir para o site</a>
+
+                <strong>{{ user.username }}</strong>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <nav>
+            <ul>
+                <li><a href = "{% url 'admin:dashboard' %}">Dashboard</a></li>
+                <li><a href = "{% url 'admin:dashboard' %}">Agendamentos</a></li>
+                <li><a href = "{% url 'admin:dashboard' %}">Serviços</a></li>
+                <li><a href = "{% url 'admin:dashboard' %}">Clientes</a></li>
+                <li><a href = "{% url 'admin:dashboard' %}">Depoimentos</a></li>
+                <li><a href = "{% url 'admin:dashboard' %}">Colaboradores</a></li>
+                <li><a href = "{% url 'admin:dashboard' %}">Locais de Serviço</a></li>
+                <li><a href = "{% url 'admin:dashboard' %}">Sair</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            {% block main %}{% endblock main %}
+        </main>
+    </main>
+</body>
+</html>

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'apps.servermedia',
     'apps.core',
     'apps.web',
+    #'apps.admin',
     'storages',
     'boto3'
 ]

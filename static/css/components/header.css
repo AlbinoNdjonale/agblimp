@@ -8,7 +8,7 @@ body > header {
 }
 
 h1 {
-    color: var(--color-contrast);
+    color: var(--color-bg);
 }
 
 body > header.rolagem {
@@ -31,15 +31,10 @@ body > header nav li {
 body nav li a {
     padding: 7px;
     text-decoration: none;
-    color: var(--color-contrast);
+    color: var(--color-bg);
     transition: .6s;
     border-radius: 3px;
     font-size: 1.1em;
-    font-weight: bold;
-}
-
-body > header.rolagem nav li a, body > header.rolagem h1 {
-    color: var(--color-bg);
 }
 
 body nav li a:hover,
@@ -93,7 +88,7 @@ header.rolagem nav li a:hover,
     border: none;
     cursor: pointer;
     border-radius: 5px;
-    background: var(--color-main);
+    background: transparent;
     border: 2px solid var(--color-bg);
     display: none;
     padding: 5px;
@@ -130,7 +125,7 @@ body > header .flex > *:not(:last-child) {
     margin-right: 7px;
 }
 
-@media screen and  (max-width: 990px) {
+@media screen and (max-width: 990px) {
     body > header nav {
         display: none;
     }
