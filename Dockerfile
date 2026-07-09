@@ -21,4 +21,6 @@ COPY . .
 
 EXPOSE 8000/tcp
 
-CMD ["gunicorn", "--workers", "2", "agblimp.wsgi:application", "--bind", "0.0.0.0:8000", "--log-level", "debug"]
+CMD sh -c "python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn --workers 2 --bind 0.0.0.0:8000 --log-level debug agblimp.wsgi:application"
+
+# CMD ["gunicorn", "--workers", "2", "agblimp.wsgi:application", "--bind", "0.0.0.0:8000", "--log-level", "debug"]
